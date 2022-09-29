@@ -1,0 +1,56 @@
+.login-background{
+    width: 100%;
+    height: 100%;
+}
+
+.login-container{
+    display: flex;
+    position: absolute;
+    color: var(--font-color);
+    top: 20%;
+    left: 35%;
+    right: 50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 60%;
+    border-radius: 25px;
+    border: 1px solid rgba(7, 0, 0, 0.8);
+    background-color: white;
+    overflow-y: hidden;
+}
+
+
+.login-background:before {
+    content: '';
+    background: url("../Images/sunset.jpg") no-repeat center/cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+.field-container {
+    margin-bottom: 20px;
+}
+
+
+.login-container input {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.8rem;
+    border-radius: 25px;
+    border: 1px solid rgba(245, 240, 240, 0.8);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+.login-signin{
+    color:rgba(8, 4, 243, 0.932);
+    font-size: 14px;
+}
+
+.login-signin:hover{
+    color:rgba(46, 42, 240, 0.8)
+}
