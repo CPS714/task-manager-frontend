@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import {FaLock} from 'react-icons/fa';
 import "../Stylings/login.css";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login(props) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [userData, setUserData] = useState({isLoading: false, status: ''});
+  const navigate = useNavigate();
+  //temp state remove status and learn how to update object state
+  const [status, setStatus] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if(status === "pass" && !isLoading){
+    navigate('/MainPage');
+    }
+  },[isLoading, status])
+
   const onSearch = (event) => {
     if(event.key === 'Enter'){
       if(userName === 'username' && password === 'password'){
-        setIsLoading(true)
-        console.log("You are in")
+        setIsLoading(false)
+        setStatus("pass")
       }
       else{
         console.log("No")
@@ -48,12 +59,11 @@ function Login(props) {
         </div>
         <div>
           {!isLoading ? 
-            <p className="login-signin" onClick={props.switchOpt} >Sign in</p> :  
-            <img style={{width: '60%', height: '20%'}} src={require('../Images/loading.gif')} alt="loading-gif" />
+            <Link className="login-signin" to="/signin" >Sign in</Link> :  
+            <img style={{width: '60%', height: '20%',}} src={require('../Images/loading.gif')} alt="loading-gif" />
             }
           
         </div>
-        
         
       </div>
     </div>

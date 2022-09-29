@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import {FaLock} from 'react-icons/fa';
 import "../Stylings/login.css";
+import { Link } from "react-router-dom";
 
 function SignIn(props) {
     return (
@@ -27,8 +28,9 @@ function SignIn(props) {
               <FaLock size={20} />
               <input type='password' name='username' placeholder="Password"/>
             </div>
+            
             <div>
-              <p className="login-signin" onClick={props.switchOpt} >log in</p>
+              <Link className="login-signin" to="/" >log in</Link>
             </div>
             
           </div>
