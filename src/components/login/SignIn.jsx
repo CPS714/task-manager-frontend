@@ -1,7 +1,7 @@
 import React from 'react'
 import { BsPersonCircle } from 'react-icons/bs'
 import { FaLock } from 'react-icons/fa'
-import '../Stylings/login.css'
+import '../../Stylings/login.css'
 import { Link } from 'react-router-dom'
 
 function SignIn (props) {
