@@ -1,52 +1,31 @@
 
-import React, { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React from 'react'
+import './App.css'
 
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Redirect,
-} from "react-router-dom";
-  
-// import Login component
-import Login from "./Login/Login";
-// import SignIn component
-import SignIn from "./Login/SignIn";
+  Route
+} from 'react-router-dom'
 
-// import ContactUs component
-import MainPage from './mainPage/MainPage';
+import Login from './Login/Login'
+import SignIn from './Login/SignIn'
+import MainPage from './mainPage/MainPage'
 
-
-
-function App() {
-  const [loginOpt, setLoginOpt] = useState(false);
-  const [userData, setUserData] = useState({});
-  const SwitchOpt = () => {
-    setLoginOpt(!loginOpt)
-  }
+function App () {
   return (
     <div className="App">
-      { /*
-      {!loginOpt ? 
-      <Login switchOpt={SwitchOpt}/> : 
-      <SignIn switchOpt={SwitchOpt}/>
-    }
-  */}
-
         <Router>
-        <Routes>
-          <Route exact path="/" element={<Login />} />
+          <Routes>
+            <Route exact path="/" element={<Login />} />
 
-          <Route exact path="/signin" element={<SignIn />} />
+            <Route exact path="/signin" element={<SignIn />} />
 
-          <Route exact path="/MainPage" element={<MainPage />} />
-        </Routes>
+            <Route exact path="/MainPage" element={<MainPage />} />
+          </Routes>
         </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
