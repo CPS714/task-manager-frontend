@@ -8,9 +8,9 @@ import {
   Route
 } from 'react-router-dom'
 
-import Login from './Login/Login'
-import SignIn from './Login/SignIn'
-import MainPage from './mainPage/MainPage'
+import Login from './components/login/Login'
+import SignIn from './components/login/SignIn'
+import MainPage from './components/mainPage/MainPage'
 
 function App () {
   return (

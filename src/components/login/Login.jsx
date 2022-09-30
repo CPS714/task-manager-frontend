@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { BsPersonCircle } from 'react-icons/bs'
 import { FaLock } from 'react-icons/fa'
-import '../Stylings/login.css'
+import '../../Stylings/login.css'
 import { Link, useNavigate } from 'react-router-dom'
 
 function Login (props) {
@@ -58,7 +58,7 @@ function Login (props) {
         <div>
           {!isLoading
             ? <Link className="login-signin" to="/signin" >Sign in</Link>
-            : <img style={{ width: '60%', height: '20%' }} src={require('../Images/loading.gif')} alt="loading-gif" />
+            : <img style={{ width: '60%', height: '20%' }} src={require('../../Images/loading.gif')} alt="loading-gif" />
             }
 
         </div>
