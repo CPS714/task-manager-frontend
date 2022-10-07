@@ -1,9 +1,11 @@
 import React from 'react'
+import TaskView from './tasksFolder/TaskView'
 
-function MainPage () {
+function MainPage (props) {
   return (
-    <div>
-      <h1> This is main page </h1>
+    <div className = "tasks-container">
+      <TaskView/>
+
     </div>
   )
 }
