@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaRegLightbulb } from 'react-icons/fa'
 import Tasks from './Tasks'
 import AddTask from './AddTask'
@@ -49,6 +49,12 @@ function TaskView () {
 
     setTasks(newState)
   }
+
+  useEffect(() => {
+    // Updates the data in session storage when
+    sessionStorage.setItem('TMA_Tasks', JSON.stringify(tasks))
+  }, [tasks])
+
   return (
     <div>
     <div className='myDay-header-Container'>
