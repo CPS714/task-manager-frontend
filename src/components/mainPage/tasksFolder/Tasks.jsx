@@ -19,7 +19,7 @@ function Tasks ({ task, onDelete, onCheck }) {
     <div className='myDay-tasks-container'>
       <div className='myDay-task'>
         <span><input type='checkbox' checked={task?.status} onChange={handleCheckbox}></input></span>
-        {task.task}
+        {task.name}
 
         <span>
 

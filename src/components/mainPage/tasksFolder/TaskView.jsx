@@ -1,25 +1,31 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import { FaRegLightbulb } from 'react-icons/fa'
 import Tasks from './Tasks'
 import AddTask from './AddTask'
 import 'primeicons/primeicons.css'
 import '../../../Stylings/mainPage.css'
+import CustomPopup from '../../../Reusable/CustomPopup'
 
-const data = [{
-  id: 1,
-  task: 'Give dog a bath',
-  status: false
-}, {
-  id: 2,
-  task: 'bark bark',
-  status: false
-}]
+function TaskView (props) {
 
-function TaskView () {
-  const [tasks, setTasks] = useState(data)
+  const {tasks, setTasks} = props;
+
+  const [openPop, setOpenPop] = useState(false)
+  const [taskdData, setTaskData] = useState()
+  const [isHover, setIsHover] = useState(false)
+  
+  const closing = () => {
+    setOpenPop(false)
+  }
+
+  const opening = (e) => {
+    setTaskData(e)
+    setOpenPop(true)
+  }
 
   function addTask (data) {
-    setTasks(prev => [...prev, { id: prev.length + 1, task: data, status: false }])
+    setTasks(prev => [...prev, { id: prev.length + 1, task: data, status: false, desc: null, priority: 3 }])
     console.log(tasks)
   }
 
@@ -65,14 +71,15 @@ function TaskView () {
 
       <AddTask className='MyDay-AddTask-Container' onAdd = {addTask}/>
 
-      <div className='myDay-tasks'>
+      <div className='myDay-tasks' >
         <h5 className='tasks-header' style={{ marginBottom: '20px' }}>Your tasks for the Day</h5>
         <>
-        {tasks.map((i) => !i.status && i?.status !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+        {tasks.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks' onClick={() => opening(i)}> <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> </div> : null)}
         </>
         <h5 className='completedTasks-header' style={{ marginTop: '40px' }}>Completed Tasks </h5>
-        {tasks.map((i) => i.status && i.status !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+        {tasks.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
       </div>
+      {openPop ? <CustomPopup closeTab={closing} data={taskdData}/>: ""}
     </div>
   )
 }

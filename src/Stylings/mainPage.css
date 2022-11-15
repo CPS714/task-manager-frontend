@@ -32,11 +32,10 @@ body {
     margin-right: 10px;
     font-weight: bold;
 }
-/*
-.myDay-tasks {
-    width: 100%;
+
+.myDay-task:hover  {
+    background-color: rgba(243, 242, 242, 0.8);
 }
-*/
 
 
 .tasks-header{
