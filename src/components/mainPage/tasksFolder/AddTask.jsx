@@ -12,7 +12,7 @@ function AddTask ({ onAdd }) {
       console.log(" you can't add a blank task")
       return
     }
-
+    console.log(text.type)
     onAdd(text)
 
     setText('')

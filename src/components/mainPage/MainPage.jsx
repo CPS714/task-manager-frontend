@@ -4,11 +4,12 @@ import TaskView from './tasksFolder/TaskView'
 import HeaderBar from './HeaderBar'
 import SideBar from './SideBar'
 import CompletedView from './CompletedTasks/CompletedView'
+import CalendarView from './CalendarView'
 import { useEffect } from 'react';
 
 function MainPage (props) {
   const [option, setOption] = useState();
-  const [options, setOptions] = useState({ all: true, completed: false })
+  const [options, setOptions] = useState({ all: true, completed: false, calendarView: false })
 
   const changeOpt = (opt) => {
     const placeholder = options;
@@ -28,8 +29,7 @@ function MainPage (props) {
       <HeaderBar />
       <div className = "tasks-container">
         <SideBar options={options} changeOpt={changeOpt}/>
-        {options?.all ? <TaskView/> : <CompletedView />}
-        
+        {options?.all ? <TaskView/> : options.completed? <CompletedView /> : <CalendarView/>}        
       </div>
     </div>
   )

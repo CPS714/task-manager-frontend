@@ -7,8 +7,8 @@ function Tasks ({ task, onDelete, onCheck }) {
   const [checked, setChecked] = useState(false)
   function handleCheckbox () {
     console.log(checked)
-    setChecked(!task?.status)
-    if (task?.status) {
+    setChecked(!task?.is_completed)
+    if (task?.is_completed) {
       onCheck(task.id, false)
     } else {
       onCheck(task.id, true)
@@ -18,8 +18,8 @@ function Tasks ({ task, onDelete, onCheck }) {
   return (
     <div className='myDay-tasks-container'>
       <div className='myDay-task'>
-        <span><input type='checkbox' checked={task?.status} onChange={handleCheckbox}></input></span>
-        {task.task}
+        <span><input type='checkbox' checked={task?.is_completed} onChange={handleCheckbox}></input></span>
+        {task.name}
 
         <span>
 
