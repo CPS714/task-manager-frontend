@@ -1,10 +1,8 @@
 .SideBar-containier{
     width: 15rem;
     height: 100%;
-    border-radius: 10px;
-    border-color: #cab8b8;
-    border-right: solid;
-    flex-direction: column;
+    padding: 1em;
+    flex-direction: column; 
     display: flex;
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import { FaRegLightbulb } from 'react-icons/fa'
 import Tasks from './Tasks'
@@ -56,8 +57,8 @@ function TaskView () {
   }, [tasks])
 
   return (
-    <div>
-    <div className='myDay-header-Container'>
+    <div className='task-view-background'>
+      <div className='myDay-header-Container'>
         <FaRegLightbulb className='myDay-BulbIcon'></FaRegLightbulb>
         <span className='myDay-Header'> My Day </span>
         <span className='pi pi-ellipsis-h'></span>

@@ -17,7 +17,7 @@ function CompletedView () {
         setCnt(1)
     },[cnt])
   return (
-    <div>
+    <div className="task-view-container">
       <div className='myDay-header-Container'>
         <FaRegLightbulb className='myDay-BulbIcon'></FaRegLightbulb>
         <span className='myDay-Header'> Completed </span>
