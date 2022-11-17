@@ -38,7 +38,7 @@ function CompletedView (props) {
   }
     
   return (
-    <div>
+    <div className="task-view-container">
       <div className='myDay-header-Container'>
         <FaRegLightbulb className='myDay-BulbIcon'></FaRegLightbulb>
         <span className='myDay-Header'> Completed </span>
