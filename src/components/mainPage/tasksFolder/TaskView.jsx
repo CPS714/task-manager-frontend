@@ -1,9 +1,11 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import { FaRegLightbulb } from 'react-icons/fa'
 import Tasks from './Tasks'
 import AddTask from './AddTask'
 import 'primeicons/primeicons.css'
 import '../../../Stylings/mainPage.css'
+import CustomPopup from '../../../Reusable/CustomPopup'
 
 // const data = [{
 //   id: 1,
@@ -15,10 +17,14 @@ import '../../../Stylings/mainPage.css'
 //   status: false
 // }]
 
-function TaskView () {
-  const [tasks, setTasks] = useState([])
-
+function TaskView (props) {
+  const {tasks, setTasks} = props;
+  const [openPop, setOpenPop] = useState(false)
+  const [taskdData, setTaskData] = useState()
+  const [isHover, setIsHover] = useState(false)
+  
   const addTask = async (task) => {
+
     const res = await fetch('http://localhost:5000/api/tasks/', {
       method: 'POST',
       headers: {
@@ -32,44 +38,23 @@ function TaskView () {
         schedule_date: '2022-10-21'
       }])
     })
+
     const data = await res.json()
     setTasks([...tasks, data])
   }
 
-  useEffect(() => {
-    const getTasks = async () => {
-      const tasksFromServer = await fetchTasks()
-      setTasks(tasksFromServer)
-    }
-    getTasks()
-  }, [])
+  const closing = () => {
+    setOpenPop(false)
+  }
 
-  const fetchTasks = async () => {
-    const res = await fetch('http://localhost:5000/api/tasks/', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    const data = await res.json()
-    return data
+  const opening = (e) => {
+    setTaskData(e)
+    setOpenPop(true)
   }
 
   // Delete Task
-  // const deleteTask = async (id) => {
-  //   await fetch(`http://localhost:5000/tasks/${id}`, { method: 'DELETE' })
-  //   setTasks(tasks.filter((task) => task.id !== id))
-  // }
-  function deleteTask (id) {
-    const newState = tasks.map(obj => {
-      if (obj.id === id) {
-        return { ...obj, status: null }
-      }
-
-      // 👇️ otherwise return object as is
-      return obj
-    })
-    setTasks(newState)
+  const deleteTask = async (id) => {
+    await fetch(`http://localhost:5000/api/tasks/${id}`, { method: 'DELETE' })
   }
 
   const completeTask = (id, isComplete) => {
@@ -96,14 +81,15 @@ function TaskView () {
 
       <AddTask className='MyDay-AddTask-Container' onAdd = {addTask}/>
 
-      <div className='myDay-tasks'>
+      <div className='myDay-tasks' >
         <h5 className='tasks-header' style={{ marginBottom: '20px' }}>Your tasks for the Day</h5>
         <>
-        {tasks.map((i) => !i.is_completed && i?.is_completed !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+        {tasks.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks' onClick={() => opening(i)}> <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> </div> : null)}
         </>
         <h5 className='completedTasks-header' style={{ marginTop: '40px' }}>Completed Tasks </h5>
         {tasks.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
       </div>
+      {openPop ? <CustomPopup closeTab={closing} data={taskdData}/>: ""}
     </div>
   )
 }

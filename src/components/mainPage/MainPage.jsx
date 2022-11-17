@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 function MainPage (props) {
   const [option, setOption] = useState();
   const [options, setOptions] = useState({ all: true, completed: false, calendarView: false })
+  const [tasks, setTasks] = useState([]);
 
   const changeOpt = (opt) => {
     const placeholder = options;
@@ -24,12 +25,27 @@ function MainPage (props) {
     console.log(options)
   }
 
+  useEffect(() => {
+
+    const fetchTasks = async() => {
+      const tasksResp = await fetch('http://localhost:5000/api/tasks');
+      return tasksResp;
+    }
+
+    fetchTasks()
+    .then(resp => resp.json())
+    .then(data => setTasks(data))
+    .catch(err => console.log(err))
+  }, [])
+
+
   return (
     <div className='mainpagecontainer'>
       <HeaderBar />
       <div className = "tasks-container">
         <SideBar options={options} changeOpt={changeOpt}/>
-        {options?.all ? <TaskView/> : options.completed? <CompletedView /> : <CalendarView/>}        
+        {options?.all ? <TaskView tasks={tasks} setTasks={setTasks} /> : options.completed? <CompletedView /> : <CalendarView/>}
+        
       </div>
     </div>
   )
