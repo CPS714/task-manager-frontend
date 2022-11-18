@@ -4,11 +4,11 @@ import TaskView from './tasksFolder/TaskView'
 import HeaderBar from './HeaderBar'
 import SideBar from './SideBar'
 import CompletedView from './CompletedTasks/CompletedView'
+import CalendarView from './CalendarView'
 import { useEffect } from 'react';
 
 function MainPage (props) {
-  const [option, setOption] = useState();
-  const [options, setOptions] = useState({ all: true, completed: false })
+  const [options, setOptions] = useState({ all: true, completed: false, calendarView: false })
   const [tasks, setTasks] = useState([]);
 
   const changeOpt = (opt) => {
@@ -24,13 +24,12 @@ function MainPage (props) {
     console.log(options)
   }
 
+  const fetchTasks = async() => {
+    const tasksResp = await fetch('http://localhost:5000/api/tasks');
+    return tasksResp;
+  }
+
   useEffect(() => {
-
-    const fetchTasks = async() => {
-      const tasksResp = await fetch('http://localhost:5000/api/tasks');
-      return tasksResp;
-    }
-
     fetchTasks()
     .then(resp => resp.json())
     .then(data => setTasks(data))
@@ -43,7 +42,7 @@ function MainPage (props) {
       <HeaderBar />
       <div className = "tasks-container">
         <SideBar options={options} changeOpt={changeOpt}/>
-        {options?.all ? <TaskView tasks={tasks} setTasks={setTasks} /> : <CompletedView />}
+        {options?.all ? <TaskView tasks={tasks} setTasks={setTasks} /> : options.completed? <CompletedView /> : <CalendarView/>}
         
       </div>
     </div>

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import '../../Stylings/sideBar.css'
 function SideBar (props) {
-  const [options, setOptions] = useState({ all: false, completed: false })
+  const [options, setOptions] = useState({ all: false, completed: false, calendarView: false })
 
   const [test, setTest] = useState(true);
 
@@ -16,6 +16,10 @@ function SideBar (props) {
 
       <div className = { props.options?.completed ? 'navbar-container-selected' : 'navbar-container' } >
       <button className='navbar' style={{marginLeft: "1rem"}} onClick={() => props.changeOpt('completed')}>Completed</button>
+      </div>
+
+      <div className = { props.options?.calendarView ? 'navbar-container-selected' : 'navbar-container' } >
+      <button className='navbar' onClick={() => props.changeOpt('calendarView')}>CalendarView</button>
       </div>
     </div>
   )

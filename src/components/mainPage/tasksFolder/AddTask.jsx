@@ -12,7 +12,6 @@ function AddTask ({ onAdd }) {
       console.log(" you can't add a blank task")
       return
     }
-
     onAdd(text)
 
     setText('')
@@ -31,5 +30,7 @@ function AddTask ({ onAdd }) {
 export default AddTask
 
 AddTask.propTypes = {
-  onAdd: propTypes.any
+  onAdd: propTypes.any,
+  tasks: propTypes.any,
+  setTasks: propTypes.any
 }

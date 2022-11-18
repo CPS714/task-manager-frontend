@@ -8,13 +8,33 @@ import '../../../Stylings/mainPage.css'
 import CustomPopup from '../../../Reusable/CustomPopup'
 
 function TaskView (props) {
-
   const {tasks, setTasks} = props;
-
+  console.log(tasks)
   const [openPop, setOpenPop] = useState(false)
   const [taskdData, setTaskData] = useState()
   const [isHover, setIsHover] = useState(false)
   
+  const addTask = async (task) => {
+
+    const res = await fetch('http://localhost:5000/api/tasks/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify([{
+        name: task,
+        is_completed: false,
+        description: task,
+        priority: 2,
+        schedule_date: '2022-10-21'
+      }])
+    })
+
+    const data = await res.json()
+    console.log(data)
+    setTasks([...tasks, {name: task}])
+  }
+
   const closing = () => {
     setOpenPop(false)
   }
@@ -24,22 +44,11 @@ function TaskView (props) {
     setOpenPop(true)
   }
 
-  function addTask (data) {
-    setTasks(prev => [...prev, { id: prev.length + 1, task: data, status: false, desc: null, priority: 3 }])
-    console.log(tasks)
-  }
+  // Delete Task
+  const deleteTask = async (id) => {
+  await fetch(`http://localhost:5000/api/tasks/${id}`, { method: 'DELETE' })
 
-  function deleteTask (id) {
-    console.log(tasks)
-    const newState = tasks.map(obj => {
-      if (obj.id === id) {
-        return { ...obj, status: null }
-      }
-
-      // 👇️ otherwise return object as is
-      return obj
-    })
-    setTasks(newState)
+  setTasks(tasks.filter((task) => task.id !== id ))
   }
 
   const completeTask = (id, isComplete) => {
@@ -56,11 +65,6 @@ function TaskView (props) {
     setTasks(newState)
   }
 
-  useEffect(() => {
-    // Updates the data in session storage when
-    sessionStorage.setItem('TMA_Tasks', JSON.stringify(tasks))
-  }, [tasks])
-
   return (
     <div>
     <div className='myDay-header-Container'>
@@ -69,15 +73,15 @@ function TaskView (props) {
         <span className='pi pi-ellipsis-h'></span>
       </div>
 
-      <AddTask className='MyDay-AddTask-Container' onAdd = {addTask}/>
+      <AddTask className='MyDay-AddTask-Container' setTasks={setTasks} tasks={tasks} onAdd = {addTask}/>
 
       <div className='myDay-tasks' >
         <h5 className='tasks-header' style={{ marginBottom: '20px' }}>Your tasks for the Day</h5>
         <>
-        {tasks.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks' onClick={() => opening(i)}> <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> </div> : null)}
+        {tasks?.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks' onClick={() => opening(i)}> <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> </div> : null)}
         </>
         <h5 className='completedTasks-header' style={{ marginTop: '40px' }}>Completed Tasks </h5>
-        {tasks.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+        {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key = {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
       </div>
       {openPop ? <CustomPopup closeTab={closing} data={taskdData}/>: ""}
     </div>
