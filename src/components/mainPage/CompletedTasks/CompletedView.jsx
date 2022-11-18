@@ -17,11 +17,11 @@ function CompletedView () {
         setCnt(1)
     },[cnt])
   return (
-    <div className="task-view-container">
-      <div className='myDay-header-Container'>
-        <FaRegLightbulb className='myDay-BulbIcon'></FaRegLightbulb>
-        <span className='myDay-Header'> Completed </span>
-        <span className='pi pi-ellipsis-h'></span>
+
+    <div className='task-view-background'>
+      <div className="task-view-container">
+        <i className='pi pi-sun' style={{'fontSize': '2em'}}></i>
+        <h2 className = 'task-type-header'>Completed</h2>
       </div>
     </div>
   )

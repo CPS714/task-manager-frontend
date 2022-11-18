@@ -5,6 +5,9 @@ import Tasks from './Tasks'
 import AddTask from './AddTask'
 import 'primeicons/primeicons.css'
 import '../../../Stylings/mainPage.css'
+import { Chip } from 'primereact/chip';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button'
 
 const data = [{
   id: 1,
@@ -18,6 +21,7 @@ const data = [{
 
 function TaskView () {
   const [tasks, setTasks] = useState(data)
+  const [tempTask, setTempTask] = useState('');
 
   function addTask (data) {
     setTasks(prev => [...prev, { id: prev.length + 1, task: data, status: false }])
@@ -56,22 +60,37 @@ function TaskView () {
     sessionStorage.setItem('TMA_Tasks', JSON.stringify(tasks))
   }, [tasks])
 
+  const taskTemplate = (option) => {
+    return (
+        <div className="inline-task-add-container" >
+        <Button icon="pi pi-check" className="p-button-rounded p-button-outlined p-button-success" aria-label="User" />
+
+            <span>
+              Text Display
+            </span>
+
+            <i className='pi pi-trash'></i>
+        </div>
+    );
+}
+
+
   return (
     <div className='task-view-background'>
-      <div className='myDay-header-Container'>
-        <FaRegLightbulb className='myDay-BulbIcon'></FaRegLightbulb>
-        <span className='myDay-Header'> My Day </span>
-        <span className='pi pi-ellipsis-h'></span>
-      </div>
+
+      <i className='pi pi-sun' style={{'fontSize': '2em'}}></i>
+      <h2 className = 'task-type-header'>My Day</h2>
+
 
       <AddTask className='MyDay-AddTask-Container' onAdd = {addTask}/>
 
+      <h5 className='task-subtitle'>Your Tasks For The Day</h5>
+
       <div className='myDay-tasks'>
-        <h5 className='tasks-header' style={{ marginBottom: '20px' }}>Your tasks for the Day</h5>
         <>
         {tasks.map((i) => !i.status && i?.status !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
         </>
-        <h5 className='completedTasks-header' style={{ marginTop: '40px' }}>Completed Tasks </h5>
+        <h5>Completed Tasks</h5>
         {tasks.map((i) => i.status && i.status !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
       </div>
     </div>
