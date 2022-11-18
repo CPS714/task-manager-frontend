@@ -39,9 +39,9 @@ function CompletedView (props) {
     
   return (
 
-    <div className='task-view-background'>
+    <div className='task-view-background' style={{backgroundImage: 'linear-gradient(to right top, #347a2d, #4b962f, #66b22c, #85cf25, #a8eb12)'}}>
       <div className="task-view-container">
-        <i className='pi pi-sun' style={{'fontSize': '2em'}}></i>
+        <i className='pi pi-check' style={{'fontSize': '2em'}}></i>
         <h2 className = 'task-type-header'>Completed</h2>
       </div>
     </div>
