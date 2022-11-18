@@ -7,18 +7,9 @@ import 'primeicons/primeicons.css'
 import '../../../Stylings/mainPage.css'
 import CustomPopup from '../../../Reusable/CustomPopup'
 
-// const data = [{
-//   id: 1,
-//   task: 'Give dog a bath',
-//   status: false
-// }, {
-//   id: 2,
-//   task: 'bark bark',
-//   status: false
-// }]
-
 function TaskView (props) {
   const {tasks, setTasks} = props;
+  console.log(tasks)
   const [openPop, setOpenPop] = useState(false)
   const [taskdData, setTaskData] = useState()
   const [isHover, setIsHover] = useState(false)
@@ -40,7 +31,8 @@ function TaskView (props) {
     })
 
     const data = await res.json()
-    setTasks([...tasks, data])
+    console.log(data)
+    setTasks([...tasks, {name: task}])
   }
 
   const closing = () => {
@@ -54,7 +46,9 @@ function TaskView (props) {
 
   // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/api/tasks/${id}`, { method: 'DELETE' })
+  await fetch(`http://localhost:5000/api/tasks/${id}`, { method: 'DELETE' })
+
+  setTasks(tasks.filter((task) => task.id !== id ))
   }
 
   const completeTask = (id, isComplete) => {
@@ -79,15 +73,15 @@ function TaskView (props) {
         <span className='pi pi-ellipsis-h'></span>
       </div>
 
-      <AddTask className='MyDay-AddTask-Container' onAdd = {addTask}/>
+      <AddTask className='MyDay-AddTask-Container' setTasks={setTasks} tasks={tasks} onAdd = {addTask}/>
 
       <div className='myDay-tasks' >
         <h5 className='tasks-header' style={{ marginBottom: '20px' }}>Your tasks for the Day</h5>
         <>
-        {tasks.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks' onClick={() => opening(i)}> <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> </div> : null)}
+        {tasks?.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks' onClick={() => opening(i)}> <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> </div> : null)}
         </>
         <h5 className='completedTasks-header' style={{ marginTop: '40px' }}>Completed Tasks </h5>
-        {tasks.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+        {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key = {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
       </div>
       {openPop ? <CustomPopup closeTab={closing} data={taskdData}/>: ""}
     </div>

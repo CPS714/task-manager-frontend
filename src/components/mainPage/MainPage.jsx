@@ -8,7 +8,6 @@ import CalendarView from './CalendarView'
 import { useEffect } from 'react';
 
 function MainPage (props) {
-  const [option, setOption] = useState();
   const [options, setOptions] = useState({ all: true, completed: false, calendarView: false })
   const [tasks, setTasks] = useState([]);
 
@@ -25,13 +24,12 @@ function MainPage (props) {
     console.log(options)
   }
 
+  const fetchTasks = async() => {
+    const tasksResp = await fetch('http://localhost:5000/api/tasks');
+    return tasksResp;
+  }
+
   useEffect(() => {
-
-    const fetchTasks = async() => {
-      const tasksResp = await fetch('http://localhost:5000/api/tasks');
-      return tasksResp;
-    }
-
     fetchTasks()
     .then(resp => resp.json())
     .then(data => setTasks(data))
