@@ -6,6 +6,9 @@ import AddTask from './AddTask'
 import 'primeicons/primeicons.css'
 import '../../../Stylings/mainPage.css'
 import CustomPopup from '../../../Reusable/CustomPopup'
+import { Chip } from 'primereact/chip';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button'
 
 function TaskView (props) {
   const {tasks, setTasks} = props;
@@ -16,19 +19,8 @@ function TaskView (props) {
   
   const addTask = async (task) => {
 
-    const res = await fetch('http://localhost:5000/api/tasks/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify([{
-        name: task,
-        is_completed: false,
-        description: task,
-        priority: 2,
-        schedule_date: '2022-10-21'
-      }])
-    })
+  const [tasks, setTasks] = useState(data)
+  const [tempTask, setTempTask] = useState('');
 
     const data = await res.json()
     console.log(data)
@@ -66,26 +58,39 @@ function TaskView (props) {
   }
 
 
+  const taskTemplate = (option) => {
+    return (
+        <div className="inline-task-add-container" >
+        <Button icon="pi pi-check" className="p-button-rounded p-button-outlined p-button-success" aria-label="User" />
+
+            <span>
+              Text Display
+            </span>
+
+            <i className='pi pi-trash'></i>
+        </div>
+    );
+}
+
+
   return (
     <div className='task-view-background'>
-      <div className='myDay-header-Container'>
-        <FaRegLightbulb className='myDay-BulbIcon'></FaRegLightbulb>
-        <span className='myDay-Header'> My Day </span>
-        <span className='pi pi-ellipsis-h'></span>
-      </div>
 
-      <AddTask className='MyDay-AddTask-Container' setTasks={setTasks} tasks={tasks} onAdd = {addTask}/>
-      {tasks !== 'err' ? 
-      <div className='myDay-tasks' >
-        <h5 className='tasks-header' style={{ marginBottom: '20px' }}>Your tasks for the Day</h5>
+      <i className='pi pi-sun' style={{'fontSize': '2em'}}></i>
+      <h2 className = 'task-type-header'>My Day</h2>
+
+
+      <AddTask className='MyDay-AddTask-Container' onAdd = {addTask}/>
+
+      <h5 className='task-subtitle'>Your Tasks For The Day</h5>
+
+      <div className='myDay-tasks'>
         <>
         {tasks?.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks' onClick={() => opening(i)}> <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> </div> : null)}
         </>
-        <h5 className='completedTasks-header' style={{ marginTop: '40px' }}>Completed Tasks </h5>
-        {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key = {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
-        </div>
-        :
-         <p>null </p>  }
+        <h5>Completed Tasks</h5>
+        {tasks.map((i) => i.status && i.status !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+      </div>
       {openPop ? <CustomPopup closeTab={closing} data={taskdData}/>: ""}
     </div>
   )

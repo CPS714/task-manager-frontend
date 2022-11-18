@@ -14,11 +14,11 @@ function SideBar (props) {
   const [selectedTaskView, setSelectedTaskView] = useState(null);
 
   const tasks = [
-    { name: 'All', code: 'ALL' , icon: 'pi-globe'},
-    { name: 'Completed', code: 'COMPL', icon: 'pi-check-circle' },
-    { name: 'Today', code: 'TDAY' , icon: 'pi-sun'},
-    { name: 'Weekly', code: 'WEEK', icon: 'pi-calendar' },
-    { name: 'Monthly', code: 'MNTH', icon: 'pi-calendar' }
+    { name: 'All', code: 'all' , icon: 'pi-globe'},
+    { name: 'Completed', code: 'completed', icon: 'pi-check-circle' },
+    { name: 'Today', code: 'today' , icon: 'pi-sun'},
+    { name: 'Weekly', code: 'week', icon: 'pi-calendar' },
+    { name: 'Monthly', code: 'month', icon: 'pi-calendar' }
   ];
 
   const taskTemplate = (option) => {
@@ -38,7 +38,8 @@ function SideBar (props) {
 
  
 
-      <ListBox value={selectedTaskView} options={tasks} onChange={(e) => setSelectedTaskView(e.value)} itemTemplate={taskTemplate} optionLabel="name" style={{margin: '20px 0px',height: '100%'}}/>
+      <ListBox value={selectedTaskView} options={tasks} onChange={(e) => { setSelectedTaskView(e.value); props.changeOpt(e.value.code)} } itemTemplate={taskTemplate} optionLabel="name" style={{margin: '20px 0px',height: '100%', width: '100%'}}/>
+
 
       {/* <div className = { props.options?.all ? 'navbar-container-selected' : 'navbar-container' } style={{marginTop: '0.3rem'}}>
       <button className='navbar' onClick={() => props.changeOpt('all')}> All</button>
@@ -49,6 +50,15 @@ function SideBar (props) {
       </div> */}
     </div>
   )
+}
+
+function changeTaskView(task){
+  // Set selected listbox option
+  setSelectedTaskView(task);
+
+  //  Set option for main view
+  props.changeOpt(task.code);
+
 }
 
 export default SideBar

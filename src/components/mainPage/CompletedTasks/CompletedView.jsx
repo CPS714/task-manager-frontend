@@ -38,18 +38,11 @@ function CompletedView (props) {
   }
     
   return (
-    <div className="task-view-container">
-      <div className='myDay-header-Container'>
-        <FaRegLightbulb className='myDay-BulbIcon'></FaRegLightbulb>
-        <span className='myDay-Header'> Completed </span>
-        <span className='pi pi-ellipsis-h'></span>
 
-        
-      <div className='myDay-tasks' >
-        <h5 className='completedTasks-header' style={{ marginTop: '40px' }}>Completed Tasks </h5>
-        {props?.tasks.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
-      </div>
-      
+    <div className='task-view-background'>
+      <div className="task-view-container">
+        <i className='pi pi-sun' style={{'fontSize': '2em'}}></i>
+        <h2 className = 'task-type-header'>Completed</h2>
       </div>
     </div>
   )
