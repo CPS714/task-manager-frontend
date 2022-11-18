@@ -52,7 +52,7 @@ function TaskView (props) {
   }
 
   const completeTask = (id, isComplete) => {
-    const newState = tasks.map(obj => {
+    const newState = tasks?.map(obj => {
       // 👇️ if id equals 2, update country property
       if (obj.id === id) {
         return { ...obj, status: isComplete }
@@ -65,6 +65,7 @@ function TaskView (props) {
     setTasks(newState)
   }
 
+
   return (
     <div>
     <div className='myDay-header-Container'>
@@ -74,7 +75,7 @@ function TaskView (props) {
       </div>
 
       <AddTask className='MyDay-AddTask-Container' setTasks={setTasks} tasks={tasks} onAdd = {addTask}/>
-
+      {tasks !== 'err' ? 
       <div className='myDay-tasks' >
         <h5 className='tasks-header' style={{ marginBottom: '20px' }}>Your tasks for the Day</h5>
         <>
@@ -82,7 +83,9 @@ function TaskView (props) {
         </>
         <h5 className='completedTasks-header' style={{ marginTop: '40px' }}>Completed Tasks </h5>
         {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key = {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
-      </div>
+        </div>
+        :
+         <p>null </p>  }
       {openPop ? <CustomPopup closeTab={closing} data={taskdData}/>: ""}
     </div>
   )

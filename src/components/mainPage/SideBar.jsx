@@ -19,7 +19,7 @@ function SideBar (props) {
       </div>
 
       <div className = { props.options?.calendarView ? 'navbar-container-selected' : 'navbar-container' } >
-      <button className='navbar' onClick={() => props.changeOpt('calendarView')}>CalendarView</button>
+      <button className='navbar' style={{marginLeft: "1rem"}} onClick={() => props.changeOpt('calendarView')}>CalendarView</button>
       </div>
     </div>
   )

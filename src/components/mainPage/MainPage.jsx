@@ -8,7 +8,9 @@ import CalendarView from './CalendarView'
 import { useEffect } from 'react';
 
 function MainPage (props) {
-  const [options, setOptions] = useState({ all: true, completed: false, calendarView: false })
+  const [option, setOption] = useState();
+  const [options, setOptions] = useState({ all: true, completed: false, error: false, calendarView: false })
+  const [isLoading, setIsLoading] = useState(true)
   const [tasks, setTasks] = useState([]);
 
   const changeOpt = (opt) => {
@@ -24,16 +26,17 @@ function MainPage (props) {
     console.log(options)
   }
 
-  const fetchTasks = async() => {
-    const tasksResp = await fetch('http://localhost:5000/api/tasks');
-    return tasksResp;
-  }
-
   useEffect(() => {
+    
+    const fetchTasks = async() => {
+      const tasksResp = await fetch('http://localhost:5000/api/tasks');
+      return tasksResp;
+    }
     fetchTasks()
     .then(resp => resp.json())
     .then(data => setTasks(data))
-    .catch(err => console.log(err))
+    .catch(err => setTasks("err"))
+    setIsLoading(false)
   }, [])
 
 
@@ -42,11 +45,18 @@ function MainPage (props) {
       <HeaderBar />
       <div className = "tasks-container">
         <SideBar options={options} changeOpt={changeOpt}/>
-        {options?.all ? <TaskView tasks={tasks} setTasks={setTasks} /> : options.completed? <CompletedView /> : <CalendarView/>}
+        <div>
+        {isLoading ?
+        <img style={{ width: '80%', height: '80%' }} src={require('../../Images/Turtle_Loading.gif')} alt="loading-gif" /> : null }
+        {(options?.all & !isLoading)? <TaskView tasks={tasks} setTasks={setTasks} /> : null}
+        {(options?.completed & !isLoading) ? <CompletedView tasks={tasks}/> : null}
+        {(options?.calendarView & !isLoading) ? <CalendarView/> : null}
+        </div>
         
       </div>
     </div>
   )
 }
+
 
 export default MainPage
