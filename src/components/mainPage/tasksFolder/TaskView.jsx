@@ -8,41 +8,57 @@ import '../../../Stylings/mainPage.css'
 import { Chip } from 'primereact/chip';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button'
+import CustomPopup from '../../../Reusable/CustomPopup'
 
-const data = [{
-  id: 1,
-  task: 'Give dog a bath',
-  status: false
-}, {
-  id: 2,
-  task: 'bark bark',
-  status: false
-}]
+function TaskView (props) {
+  const {tasks, setTasks} = props;
+  console.log(tasks)
+  const [openPop, setOpenPop] = useState(false)
+  const [taskdData, setTaskData] = useState()
+  const [isHover, setIsHover] = useState(false)
+  
+  const addTask = async (task) => {
 
-function TaskView () {
+    async function TaskView () {
   const [tasks, setTasks] = useState(data)
   const [tempTask, setTempTask] = useState('');
+    const res = await fetch('http://localhost:5000/api/tasks/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify([{
+        name: task,
+        is_completed: false,
+        description: task,
+        priority: 2,
+        schedule_date: '2022-10-21'
+      }])
+    })
 
-  function addTask (data) {
-    setTasks(prev => [...prev, { id: prev.length + 1, task: data, status: false }])
-    console.log(tasks)
+    const data = await res.json()
+    console.log(data)
+    setTasks([...tasks, {name: task}])
   }
 
-  function deleteTask (id) {
-    console.log(tasks)
-    const newState = tasks.map(obj => {
-      if (obj.id === id) {
-        return { ...obj, status: null }
-      }
+  const closing = () => {
+    setOpenPop(false)
+  }
 
-      // 👇️ otherwise return object as is
-      return obj
-    })
-    setTasks(newState)
+  const opening = (e) => {
+    setTaskData(e)
+    setOpenPop(true)
+  }
+
+  // Delete Task
+  const deleteTask = async (id) => {
+  await fetch(`http://localhost:5000/api/tasks/${id}`, { method: 'DELETE' })
+
+  setTasks(tasks.filter((task) => task.id !== id ))
   }
 
   const completeTask = (id, isComplete) => {
-    const newState = tasks.map(obj => {
+    const newState = tasks?.map(obj => {
       // 👇️ if id equals 2, update country property
       if (obj.id === id) {
         return { ...obj, status: isComplete }
@@ -55,10 +71,6 @@ function TaskView () {
     setTasks(newState)
   }
 
-  useEffect(() => {
-    // Updates the data in session storage when
-    sessionStorage.setItem('TMA_Tasks', JSON.stringify(tasks))
-  }, [tasks])
 
   const taskTemplate = (option) => {
     return (
@@ -82,19 +94,19 @@ function TaskView () {
       <h2 className = 'task-type-header'>My Day</h2>
 
 
-      <AddTask className='MyDay-AddTask-Container' onAdd = {addTask}/>
+      <AddTask className='MyDay-AddTask-Container' setTasks={setTasks} tasks={tasks}  onAdd = {addTask}/>
 
       <h5 className='task-subtitle'>Your Tasks For The Day</h5>
 
       <div className='myDay-tasks'>
         <>
-        {tasks.map((i) => !i.status && i?.status !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+        {tasks?.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks' onClick={() => opening(i)}> <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> </div> : null)}
         </>
         <h5>Completed Tasks</h5>
-        {tasks.map((i) => i.status && i.status !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+        {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
       </div>
     </div>
   )
 }
-
-export default TaskView
+}
+  export default TaskView 

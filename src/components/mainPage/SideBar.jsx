@@ -7,7 +7,7 @@ import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
 import '../../Stylings/sideBar.css'
 function SideBar (props) {
-  const [options, setOptions] = useState({ all: false, completed: false })
+  const [options, setOptions] = useState({ all: false, completed: false, calendarView: false })
 
   const [test, setTest] = useState(true);
 
@@ -17,6 +17,7 @@ function SideBar (props) {
     { name: 'All', code: 'all' , icon: 'pi-globe'},
     { name: 'Completed', code: 'completed', icon: 'pi-check-circle' },
     { name: 'Today', code: 'today' , icon: 'pi-sun'},
+    { name: 'Calendar' , code:'calendarView', icon: 'pi-sun'},
     { name: 'Weekly', code: 'week', icon: 'pi-calendar' },
     { name: 'Monthly', code: 'month', icon: 'pi-calendar' }
   ];

@@ -12,8 +12,8 @@ function Tasks ({ task, onDelete, onCheck }) {
   const [checked, setChecked] = useState(false)
   function handleCheckbox () {
     console.log(checked)
-    setChecked(!task?.status)
-    if (task?.status) {
+    setChecked(!task?.is_completed)
+    if (task?.is_completed) {
       onCheck(task.id, false)
     } else {
       onCheck(task.id, true)
@@ -26,7 +26,7 @@ function Tasks ({ task, onDelete, onCheck }) {
   const taskTemplate = (option) => {
     return (
         <div className="inline-task-add-container" >
-        <Checkbox onChange={handleCheckbox} checked={task?.status}></Checkbox>
+        <Checkbox onChange={handleCheckbox} checked={task?.is_completed}></Checkbox>
             <span>
               {task.task}
             </span>
