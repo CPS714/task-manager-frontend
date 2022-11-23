@@ -45,7 +45,7 @@ function MainPage (props) {
       <HeaderBar />
       <div className = "tasks-container">
         <SideBar options={options} changeOpt={changeOpt}/>
-        <div>
+        <div style={{flex: 1, overflow: 'auto'}}>
         {isLoading ?
         <img style={{ width: '80%', height: '80%' }} src={require('../../Images/Turtle_Loading.gif')} alt="loading-gif" /> : null }
         {(options?.all & !isLoading)? <TaskView tasks={tasks} setTasks={setTasks} /> : null}
