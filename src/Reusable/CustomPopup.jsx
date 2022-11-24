@@ -14,8 +14,7 @@ function CustomPopup(props) {
     const [desc, setDec] = useState(props?.data?.description)
     const [priority, setPriority] = useState(props?.data?.priority)
     const [onSave, SetOnSave] = useState(true)
-    const [date3, setDate3] = useState(props?.data?.schedule_date);
-    console.log(date3)
+    const [date, setDate] = useState(props?.data?.schedule_date);
     
     //Declaring date variables 
     let today = new Date();
@@ -41,7 +40,7 @@ function CustomPopup(props) {
             name: task,
             description: desc,
             priority: priority,
-            schedule_date: date3
+            schedule_date: date
 
           })
       };
@@ -89,7 +88,7 @@ function CustomPopup(props) {
 
             <div div className='priority' style={{marginTop: "1rem"}}>
                 <h1 style={{marginLeft: "1rem", fontSize: "30px"}}><b> Date: </b></h1>
-                <Calendar style={{ left: '0%', marginRight: '2rem' }} id="icon" value={date3} onChange={(e) => setDate3(e.value)}  appendTo={'self'} showIcon />
+                <Calendar style={{ left: '0%', marginRight: '2rem' }} id="icon" value={date ? new Date(date) : null} onChange={(e) => setDate(e.value)}  appendTo={'self'} showIcon />
             </div>
         </div>
         <div className='descreption-container'>
