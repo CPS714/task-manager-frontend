@@ -6,22 +6,34 @@ body {
     border-radius: 10px;
     border-color: #cab8b8;
   } */
-  .mainpagecontainer{
+
+.task-view-background{
+    background: linear-gradient(to left bottom, #1d4c94, #4266ac, #6280c5, #809cde, #9eb9f8);;
+    padding-top: 5em;
+    width: 100%;
+    min-height: 100%; 
+    color: white;
+}
+
+.mainpagecontainer{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-end;
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(to right bottom, #1d4c94, #4266ac, #6280c5, #809cde, #9eb9f8);
 }
+
+
 .tasks-container{
+    display: flex;
+    justify-items: center;
+    background: whitesmoke;
     border-style: solid;
-    height:700px;
-    width: 100%;
-    border-radius: 10px;
+    height:90vh;
+    width: 100vw;
     border-color: #cab8b8;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    /*align-items: flex-start;*/
 }
 
 .myDay-BulbIcon {
@@ -75,4 +87,28 @@ justify-content: flex-start;
 border-style: solid;
 border-color: rgb(202, 184, 184);
 border-width: 3px;
+}
+
+
+
+
+.task-type-header{
+    margin-bottom: 2em;
+}
+
+.task-subtitle{
+    margin: 2em 0;
+
+}
+
+.inline-task-add-container{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.task-container-text-input{
+    width: max-content;
 }

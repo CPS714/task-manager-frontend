@@ -22,3 +22,12 @@
     background-color: white;
     border: none;
 }
+
+.task-name-container{
+    width: 100%;
+
+}
+.task-name-container:hover{
+    background-color: rgb(118, 123, 133);
+    cursor: pointer;
+}

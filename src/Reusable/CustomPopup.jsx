@@ -10,11 +10,12 @@ import 'primereact/resources/themes/tailwind-light/theme.css'
 function CustomPopup(props) {
     const [edit, setEdit] = useState(true)
     const [id, setId] = useState(props?.data?.id)
-    const [task, setTask] = useState(props?.data?.task)
-    const [desc, setDec] = useState(props?.data?.desc)
+    const [task, setTask] = useState(props?.data?.name)
+    const [desc, setDec] = useState(props?.data?.description)
     const [priority, setPriority] = useState(props?.data?.priority)
     const [onSave, SetOnSave] = useState(true)
-    const [date3, setDate3] = useState(null);
+    const [date3, setDate3] = useState(props?.data?.schedule_date);
+    console.log(date3)
     
     //Declaring date variables 
     let today = new Date();
@@ -27,12 +28,30 @@ function CustomPopup(props) {
 
 
     useEffect(() => {
-        if(task !== props?.data?.task || desc !== props?.data?.desc || priority !== props?.data?.priority){
+        if(task !== props?.data?.name || desc !== props?.data?.desc || priority !== props?.data?.priority){
             SetOnSave(false)
         }
     }, [task, desc, priority])
 
-    
+    const updateTask =  async () => {
+        const requestOptions = {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: task,
+            description: desc,
+            priority: priority,
+            schedule_date: date3
+
+          })
+      };
+      await fetch(`http://localhost:5000/api/tasks/${props?.data?.id}`, requestOptions)
+          //.then(response => response.json())
+          .catch(err => console.log(err))
+          props.getCall()
+          //setTasks([...tasks, {is_completed: isComplete}])
+        
+      }
 
   return (
     <div className='popup-box'>
@@ -65,7 +84,12 @@ function CustomPopup(props) {
             </div>
             <div className='priority' style={{marginTop: "1rem"}}>
                 <h1 style={{marginLeft: "1rem", fontSize: "30px"}}><b> Status: </b></h1>
-                <p style={{marginRight: '2rem', fontSize: "24px"}}>{props?.data?.status ? "Completed" : "Incomplete"} </p>
+                <p style={{marginRight: '2rem', fontSize: "24px"}}>{props?.data?.is_completed ? "Completed" : "Incomplete"} </p>
+            </div>
+
+            <div div className='priority' style={{marginTop: "1rem"}}>
+                <h1 style={{marginLeft: "1rem", fontSize: "30px"}}><b> Date: </b></h1>
+                <Calendar style={{ left: '0%', marginRight: '2rem' }} id="icon" value={date3} onChange={(e) => setDate3(e.value)}  appendTo={'self'} showIcon />
             </div>
         </div>
         <div className='descreption-container'>
@@ -79,11 +103,9 @@ function CustomPopup(props) {
             onChange={(event) => setDec(event.target.value)}
             disabled={edit}/>
         </div>
-        <div className="field col-12 md:col-4">
-            <Calendar id="icon" value={date3} onChange={(e) => setDate3(e.value)}  appendTo={'self'} showIcon />
-        </div>
+        
         <div className="footer" >
-            <button className='edit' disabled={onSave} style={onSave ? {color: 'grey'} : {color: 'blue'}} onClick={()=>{console.log("Hello")}}> Save  </button>
+            <button className='edit' disabled={onSave} style={onSave ? {color: 'grey'} : {color: 'blue'}} onClick={updateTask}> Save  </button>
         </div>
     </div>
   )
