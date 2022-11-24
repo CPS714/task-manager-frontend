@@ -11,11 +11,11 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { useAuth0 } from '@auth0/auth0-react'
 
 function HeaderBar () {
-
-
+    const { user, logout } = useAuth0()
+    console.log(user)
     const items = [
         {
-           label:'Users',
+           label: user.name,
            icon:'pi pi-fw pi-user',
            items:[
               {
@@ -25,7 +25,7 @@ function HeaderBar () {
               {
                 label:'Logout',
                 icon:'pi pi-fw pi-power-off',
-                url:'/',
+                url: ()=> logout({ returnTo: window.location.origin }),
              }
            ]
         },

@@ -17,8 +17,7 @@ function SideBar (props) {
     { name: 'All', code: 'all' , icon: 'pi-globe'},
     { name: 'Completed', code: 'completed', icon: 'pi-check-circle' },
     { name: 'Today', code: 'today' , icon: 'pi-sun'},
-    { name: 'Weekly', code: 'week', icon: 'pi-calendar' },
-    { name: 'Monthly', code: 'month', icon: 'pi-calendar' }
+    { name: 'Calander', code: 'calendarView', icon: 'pi-calendar' }
   ];
 
   const taskTemplate = (option) => {

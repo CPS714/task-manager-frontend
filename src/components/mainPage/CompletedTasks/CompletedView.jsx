@@ -6,36 +6,10 @@ import Tasks from '../tasksFolder/Tasks'
 
 
 function CompletedView (props) {
-    const [tasks, setTasks] = useState({})
-    const [cnt, setCnt] = useState(0);
+    const {tasks, setTasks, getCall, deleteTask, completeTask} = props;
+    //const [tasks, setTasks] = useState({})
+    //const [cnt, setCnt] = useState(0);
 
-    
-  function deleteTask (id) {
-    console.log(tasks)
-    const newState = tasks.map(obj => {
-      if (obj.id === id) {
-        return { ...obj, status: null }
-      }
-
-      // 👇️ otherwise return object as is
-      return obj
-    })
-    setTasks(newState)
-  }
-
-  const completeTask = (id, isComplete) => {
-    const newState = tasks.map(obj => {
-      // 👇️ if id equals 2, update country property
-      if (obj.id === id) {
-        return { ...obj, status: isComplete }
-      }
-
-      // 👇️ otherwise return object as is
-      return obj
-    })
-
-    setTasks(newState)
-  }
     
   return (
 
@@ -43,6 +17,7 @@ function CompletedView (props) {
       <div className="task-view-container">
         <i className='pi pi-check' style={{'fontSize': '2em'}}></i>
         <h2 className = 'task-type-header'>Completed</h2>
+        {tasks.map((i) => i.is_completed && i.is_completed !== null ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
       </div>
     </div>
   )

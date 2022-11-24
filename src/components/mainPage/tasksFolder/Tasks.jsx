@@ -8,7 +8,7 @@ import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import { Checkbox } from 'primereact/checkbox';
 
-function Tasks ({ task, onDelete, onCheck }) {
+function Tasks ({ task, onDelete, onCheck, opening }) {
   const [checked, setChecked] = useState(false)
   function handleCheckbox () {
     console.log(checked)
@@ -26,12 +26,12 @@ function Tasks ({ task, onDelete, onCheck }) {
   const taskTemplate = (option) => {
     return (
         <div className="inline-task-add-container" >
-        <Checkbox onChange={handleCheckbox} checked={task?.status}></Checkbox>
-            <span>
+        <Checkbox onChange={handleCheckbox} checked={task?.is_completed}></Checkbox>
+            <span className="task-name-container" onClick={() => opening(task)}>
               {task.name}
             </span>
 
-            <i className='pi pi-trash'></i>
+            <i className='pi pi-trash' onClick={() => onDelete(task.id)} ></i>
         </div>
     );
 }

@@ -10,7 +10,7 @@ import propTypes from 'prop-types'
 
 function AddTask ({ onAdd }) {
   const [text, setText] = useState('')
-
+  const [tempTask, setTempTask] = useState('');
   const submit = (e) => {
     e.preventDefault()
 
@@ -25,12 +25,12 @@ function AddTask ({ onAdd }) {
     setTempTask('');
   }
 
-  const [tempTask, setTempTask] = useState('');
+
 
     const taskTemplate = (option) => {
       return (
           <div className="inline-task-add-container">
-          <Button icon="pi pi-plus" className="p-button-rounded p-button-info" aria-label="User" />
+          <Button icon="pi pi-plus" className="p-button-rounded p-button-info" aria-label="User" type='submit' />
 
 
              <InputText 
