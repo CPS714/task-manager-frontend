@@ -31,7 +31,6 @@ function TaskView (props) {
       is_completed: false,
       description: task,
       priority: 2,
-      schedule_date: '2022-10-21',
       email: user.email
     }])
   })
@@ -71,13 +70,13 @@ function TaskView (props) {
   return (
     <div className='task-view-background'>
 
-      <i className='pi pi-sun' style={{'fontSize': '2em'}}></i>
-      <h2 className = 'task-type-header'>My Day</h2>
+      <i className='pi pi-globe' style={{'fontSize': '2em'}}></i>
+      <h2 className = 'task-type-header'>All Tasks</h2>
 
 
       <AddTask className='MyDay-AddTask-Container' onAdd = {addTask}/>
 
-      <h5 className='task-subtitle'>Your Tasks For The Day</h5>
+      <h5 className='task-subtitle'>Your Tasks</h5>
 
       <div className='myDay-tasks'>
         <>
