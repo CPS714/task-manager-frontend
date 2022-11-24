@@ -23,26 +23,18 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const events = [
-  {
-      title: "Big Meeting",
-      allDay: true,
-      start: new Date(2022, 6, 0),
-      end: new Date(2022, 6, 0),
-  },
-  {
-      title: "Vacation",
-      start: new Date(2022, 6, 7),
-      end: new Date(2022, 6, 10),
-  },
-  {
-      title: "Conference",
-      start: new Date(2022, 6, 20),
-      end: new Date(2022, 6, 23),
-  },
-];
-
 function CalendarView(props){
+  const {tasks} = props;
+
+  const events = tasks?.map((task) => (
+    {
+      title:task.name, 
+      start: new Date(task.schedule_date), 
+      end: new Date(task.schedule_date)
+    })
+  );
+
+
     return(
         <div>
         <div className='myDay-header-Container'>

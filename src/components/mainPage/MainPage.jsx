@@ -4,13 +4,14 @@ import TaskView from './tasksFolder/TaskView'
 import HeaderBar from './HeaderBar'
 import SideBar from './SideBar'
 import CompletedView from './CompletedTasks/CompletedView'
+import TodayView from './TodayTasks/TodayView'
 import CalendarView from './CalendarView'
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 
 function MainPage (props) {
   const [option, setOption] = useState();
-  const [options, setOptions] = useState({ all: true, completed: false, error: false, calendarView: false })
+  const [options, setOptions] = useState({ all: true, completed: false, error: false, today: false, calendarView: false})
   const [isLoading, setIsLoading] = useState(true)
   const [tasks, setTasks] = useState([]);
   const { user, logout } = useAuth0()
@@ -91,7 +92,8 @@ function MainPage (props) {
         <img style={{ width: '80%', height: '80%' }} src={require('../../Images/Turtle_Loading.gif')} alt="loading-gif" /> : null }
         {(options?.all & !isLoading)? <TaskView tasks={tasks} setTasks={setTasks} getCall={getCall} deleteTask={deleteTask} completeTask={completeTask} /> : null}
         {(options?.completed & !isLoading) ? <CompletedView tasks={tasks} completeTask={completeTask} deleteTask={deleteTask} getCall={getCall}/> : null}
-        {(options?.calendarView & !isLoading) ? <CalendarView/> : null}
+        {(options?.today & !isLoading) ? <TodayView tasks={tasks} completeTask={completeTask} deleteTask={deleteTask} getCall={getCall}/> : null}
+        {(options?.calendarView & !isLoading) ? <CalendarView tasks={tasks}/> : null}
         </div>
         
       </div>
