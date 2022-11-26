@@ -25,7 +25,7 @@ function TaskView (props) {
   const addTask = async (task) => {
   // const [tasks, setTasks] = useState(data)
   // const [tempTask, setTempTask] = useState('');
-  const res = await fetch('http://localhost:5000/api/tasks/', {
+  const res = await fetch(`http://localhost:5000/api/tasks/user/${user.email}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -35,7 +35,6 @@ function TaskView (props) {
       is_completed: false,
       description: task,
       priority: 2,
-      email: user.email,
       schedule_date: `${year}-${month}-${day}`
     }])
   })
