@@ -5,9 +5,11 @@ import './CustomPopup.css'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { Calendar } from 'primereact/calendar'
 import { addLocale } from 'primereact/api';
+import { Dialog } from 'primereact/dialog';
 import 'primereact/resources/themes/tailwind-light/theme.css'    
 
 function CustomPopup(props) {
+    const [displayBasic, setDisplayBasic] = useState(false);
     const [edit, setEdit] = useState(true)
     const [id, setId] = useState(props?.data?.id)
     const [task, setTask] = useState(props?.data?.name)
@@ -54,6 +56,8 @@ function CustomPopup(props) {
 
   return (
     <div className='popup-box'>
+
+        
         <div className="header-bar" >
             <button className="btn-close" onClick={props.closeTab} style={{marginLeft: '0.5rem', paddingTop: '0.5rem'}}> </button>
             <button className='edit' onClick={() => setEdit(!edit)}> {edit? "Edit" : "Close" }  </button>

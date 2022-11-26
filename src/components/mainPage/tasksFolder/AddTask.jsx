@@ -45,8 +45,7 @@ function AddTask ({ onAdd }) {
                 style={{width:'80%'}} 
                 value={tempTask} 
                 placeholder="Task for the day is..."
-                onChange={(e) => setTempTask(e.target.value)} />   
-              <i className="pi pi-trash"></i>
+                onChange={(e) => setTempTask(e.target.value)} />  
           </div>
       );
   }

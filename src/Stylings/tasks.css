@@ -28,7 +28,3 @@
     display: flex;
     flex-direction: column;
 }
-.task-name-container:hover{
-    background-color: rgb(118, 123, 133);
-    cursor: pointer;
-}

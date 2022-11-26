@@ -31,26 +31,31 @@ function Tasks ({ task, onDelete, onCheck, opening }) {
     }
   }
 
+  function deleteTask(taskID){
+    onDelete(taskID);
+  }
+
   const taskScheduleDate = new Date(Date.parse(task.schedule_date))
 
   const taskTemplate = (option) => {
     return (
 
-        <div className="inline-task-add-container" >
-        <Checkbox onChange={handleCheckbox} checked={task?.is_completed}></Checkbox>
-            <span className="task-name-container" onClick={() => opening(task)}>
-              {task.name}
-              {!task?.is_completed && <p className='pi pi-calendar' style={{color:"grey", fontSize:"10px"}}> {task.schedule_date?.slice(0,10)} </p>}
-              {task?.is_completed && <p className='pi pi-calendar' style={{color:"grey", fontSize:"10px", textDecoration: "line-through" }}> {task.schedule_date?.slice(0,10)} </p>}
-            </span>
-            <i className='pi pi-trash' onClick={() => onDelete(task.id)} ></i>
+        <div className="inline-task-container" >
+          <Checkbox onChange={handleCheckbox} checked={task?.is_completed}></Checkbox>
+          <span className="task-name-container">
+            {task.name}
+            {!task?.is_completed && <p className='pi pi-calendar' style={{color:"grey", fontSize:"10px"}}> {task.schedule_date?.slice(0,10)} </p>}
+            {task?.is_completed && <p className='pi pi-calendar' style={{color:"grey", fontSize:"10px", textDecoration: "line-through" }}> {task.schedule_date?.slice(0,10)} </p>}
+          </span>
+          <Button className='p-button-rounded p-button-outlined' style={{zIndex:"90000"}} icon='pi pi-trash' onClick={(event) =>    {onDelete(task.id); event.stopPropagation() }} >
+          </Button>
         </div>
     );
 }
 
 
   return (
-    <Chip style={{padding:'1em', width: '80%', justifyContent: 'space-evenly', background: 'white', margin: '1em 0'}} template={taskTemplate} />
+    <Chip style={{padding:'1em', width: '80%', justifyContent: 'space-evenly', background: 'white', margin: '1em 0',cursor:'pointer'}} onClick={() => opening(task)} template={taskTemplate} />
     // <div className='myDay-tasks-container'>
 
       
