@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react'
 import '../../../Stylings/mainPage.css'
 import { FaRegLightbulb } from 'react-icons/fa'
 import Tasks from '../tasksFolder/Tasks'
+import CustomPopup from '../../../Reusable/CustomPopup'
 
 
 function TodayView (props) {
     const {tasks, setTasks, getCall, deleteTask, completeTask} = props;
+    const [openPop, setOpenPop] = useState(false)
+    const [taskdData, setTaskData] = useState()
 
     const isToday = (scheduleDate) => {
       const today = new Date()
@@ -17,6 +20,15 @@ function TodayView (props) {
         taskScheduleDate.getFullYear() == today.getFullYear();
     }
 
+    const closing = () => {
+      setOpenPop(false)
+    }
+  
+    const opening = (e) => {
+      setTaskData(e)
+      setOpenPop(true)
+    }
+
     
   return (
 
@@ -24,8 +36,9 @@ function TodayView (props) {
       <div className="task-view-container">
         <i className='pi pi-sun' style={{'fontSize': '2em'}}></i>
         <h2 className = 'task-type-header'>Todays Tasks</h2>
-        {tasks.map((i) => isToday(i.schedule_date) ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+        {tasks.map((i) => isToday(i.schedule_date) ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} opening={opening}/> : null)}
       </div>
+      {openPop ? <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>: ""}
     </div>
   )
 }

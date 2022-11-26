@@ -5,6 +5,7 @@ import HeaderBar from './HeaderBar'
 import SideBar from './SideBar'
 import CompletedView from './CompletedTasks/CompletedView'
 import TodayView from './TodayTasks/TodayView'
+import SearchedTaksView from './SearchedTasks/SearchedTasksView'
 import CalendarView from './CalendarView'
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
@@ -15,6 +16,19 @@ function MainPage (props) {
   const [isLoading, setIsLoading] = useState(true)
   const [tasks, setTasks] = useState([]);
   const { user, logout } = useAuth0()
+  const [searchedResult, setSearchedResult] = useState('')
+
+  const onSearchResult = (result) => {
+    setSearchedResult(result)
+    if (result){
+      const placeholder = options;
+      Object.keys(placeholder).forEach(menu => {
+        placeholder[menu] = false
+      })
+      setOptions({...placeholder})
+    }
+  }
+
   const changeOpt = (opt) => {
     const placeholder = options;
     Object.keys(placeholder).forEach(key => {
@@ -25,7 +39,6 @@ function MainPage (props) {
       }
     })
     setOptions({...placeholder});
-    console.log(options)
   }
 
   //API calls used by all classes
@@ -84,16 +97,17 @@ function MainPage (props) {
 
   return (
     <div className='mainpagecontainer'>
-      <HeaderBar />
+      <HeaderBar onSearch={onSearchResult}/>
       <div className = "tasks-container">
-        <SideBar options={options} changeOpt={changeOpt}/>
+        <SideBar options={options} changeOpt={changeOpt} searchedResult={searchedResult}/>
         <div style={{flex: 1, overflow: 'auto'}}>
         {isLoading ?
         <img style={{ width: '80%', height: '80%' }} src={require('../../Images/Turtle_Loading.gif')} alt="loading-gif" /> : null }
         {(options?.all & !isLoading)? <TaskView tasks={tasks} setTasks={setTasks} getCall={getCall} deleteTask={deleteTask} completeTask={completeTask} /> : null}
         {(options?.completed & !isLoading) ? <CompletedView tasks={tasks} completeTask={completeTask} deleteTask={deleteTask} getCall={getCall}/> : null}
         {(options?.today & !isLoading) ? <TodayView tasks={tasks} completeTask={completeTask} deleteTask={deleteTask} getCall={getCall}/> : null}
-        {(options?.calendarView & !isLoading) ? <CalendarView tasks={tasks}/> : null}
+        {(options?.calendarView & !isLoading) ? <CalendarView tasks={tasks} setTasks={setTasks}/> : null}
+        {(!options?.all & !options?.completed & !options?.today & !options?.calendarView & !isLoading) ? <SearchedTaksView searchedResult={searchedResult} tasks={tasks} completeTask={completeTask} deleteTask={deleteTask} getCall={getCall}/>: null}
         </div>
         
       </div>

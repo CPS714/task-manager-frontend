@@ -29,7 +29,15 @@ function SideBar (props) {
     );
 }
 
-
+  const selectedView = (searchedTask) => {
+    if (searchedTask){
+      setSelectedTaskView(null)
+      console.log(selectedTaskView)
+      return selectedTaskView
+  } else{
+    return selectedTaskView
+  }
+  }
 
   return (
     <div className='SideBar-containier'>
@@ -37,7 +45,7 @@ function SideBar (props) {
 
  
 
-      <ListBox value={selectedTaskView} options={tasks} onChange={(e) => { setSelectedTaskView(e.value); props.changeOpt(e.value.code)} } itemTemplate={taskTemplate} optionLabel="name" style={{margin: '20px 0px',height: '100%', width: '100%'}}/>
+      <ListBox value={selectedView} options={tasks} onChange={(e) => { setSelectedTaskView(e.value); props.changeOpt(e.value.code)} } itemTemplate={taskTemplate} optionLabel="name" style={{margin: '20px 0px',height: '100%', width: '100%'}}/>
 
 
       {/* <div className = { props.options?.all ? 'navbar-container-selected' : 'navbar-container' } style={{marginTop: '0.3rem'}}>

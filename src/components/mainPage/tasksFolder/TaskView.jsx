@@ -11,9 +11,13 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button'
 import { User } from '@auth0/auth0-react'
 import { useAuth0 } from '@auth0/auth0-react'
+
 function TaskView (props) {
   const {tasks, setTasks, getCall, deleteTask, completeTask} = props;
-  console.log(tasks)
+  const today = new Date()
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
   const [openPop, setOpenPop] = useState(false)
   const [taskdData, setTaskData] = useState()
   const [isHover, setIsHover] = useState(false)
@@ -31,7 +35,8 @@ function TaskView (props) {
       is_completed: false,
       description: task,
       priority: 2,
-      email: user.email
+      email: user.email,
+      schedule_date: `${year}-${month}-${day}`
     }])
   })
     const data = await res.json()
@@ -84,7 +89,7 @@ function TaskView (props) {
         <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} opening={opening} /> </div> : null)}
         </>
         <h5>Completed Tasks</h5>
-        {tasks.map((i) => i.is_completed && i.is_completed !== null ? <Tasks opening={opening} key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+        {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks opening={opening} key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
       </div>
       {openPop ? <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>: ""}
     </div>

@@ -7,8 +7,6 @@ import Tasks from '../tasksFolder/Tasks'
 
 function CompletedView (props) {
     const {tasks, setTasks, getCall, deleteTask, completeTask} = props;
-    //const [tasks, setTasks] = useState({})
-    //const [cnt, setCnt] = useState(0);
 
     
   return (

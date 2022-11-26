@@ -81,18 +81,18 @@ function CustomPopup(props) {
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
-            <div className='priority' style={{marginTop: "1rem"}}>
+            <div className='status' style={{marginTop: "1rem"}}>
                 <h1 style={{marginLeft: "1rem", fontSize: "30px"}}><b> Status: </b></h1>
                 <p style={{marginRight: '2rem', fontSize: "24px"}}>{props?.data?.is_completed ? "Completed" : "Incomplete"} </p>
             </div>
 
-            <div div className='priority' style={{marginTop: "1rem"}}>
+            <div div className='date' style={{marginTop: "1rem"}}>
                 <h1 style={{marginLeft: "1rem", fontSize: "30px"}}><b> Date: </b></h1>
                 <Calendar style={{ left: '0%', marginRight: '2rem' }} id="icon" value={date ? new Date(date) : null} onChange={(e) => setDate(e.value)}  appendTo={'self'} showIcon />
             </div>
         </div>
         <div className='descreption-container'>
-            <h1 style={{marginLeft: '1rem'}} > Description </h1>
+            <h1 className='descriptionClass'  > Description </h1>
             <textarea 
             style = {{marginLeft: '1rem'}}
             type='text'
