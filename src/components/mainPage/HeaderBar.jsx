@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from 'react'
+import { useEffect, useState } from 'react'
 import { BsPersonCircle } from 'react-icons/bs'
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
@@ -10,9 +11,16 @@ import '../../Stylings/headerbar.css'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { useAuth0 } from '@auth0/auth0-react'
 
-function HeaderBar () {
+function HeaderBar ({onSearch}) {
     const { user, logout } = useAuth0()
-    console.log(user)
+    const [searchResult, setSearchResult] = useState('')
+
+    const submit = (e) => {
+      console.log(e)
+      e.preventDefault()
+      onSearch(searchResult.trim())
+      setSearchResult('')
+    }
     const items = [
         {
            label: user.name,
@@ -33,10 +41,10 @@ function HeaderBar () {
 
      const start = <img alt="logo" src="showcase/images/logo.png" onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} height="40" className="mr-2"></img>;
      const searchBar = ( 
-        <div className="p-inputgroup" >
-            <Button icon="pi pi-search" className="p-button-warning"/>
-            <InputText placeholder="Keyword"/>
-        </div>
+        <form className="p-inputgroup" onSubmit={submit}>
+            <Button icon="pi pi-search" className="p-button-warning" type='submit' />
+            <InputText placeholder="Keyword" value={searchResult} onChange={(e) => setSearchResult(e.target.value)}/>
+        </form>
     );
   return (
 
