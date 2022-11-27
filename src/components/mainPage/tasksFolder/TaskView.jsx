@@ -63,10 +63,6 @@ function TaskView (props) {
     return (
         <div className="inline-task-container" >
         <Button icon="pi pi-check" className="p-button-rounded p-button-outlined p-button-success" aria-label="User" />
-
-            <span>
-              Text Display
-            </span>
         </div>
     );
 }
@@ -91,13 +87,10 @@ function TaskView (props) {
         <h5>Completed Tasks</h5>
         {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks opening={opening} key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
       </div>
-      {openPop ? <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>: ""}
+      {/* {openPop ? <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>: ""} */}
 
-      <Dialog header="Header" visible={openPop} style={{ width: '50vw' }} onHide={() => setOpenPop(false)}>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <Dialog header="Task Editor" visible={openPop} style={{ width: '50vw' }} onHide={() => setOpenPop(false)}>
+        <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>
       </Dialog>
     </div>
   )
