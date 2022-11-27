@@ -121,14 +121,15 @@ border-width: 3px;
     align-content: center;
 }
 
-.myDay-tasks .p-chip:hover{
+ /* Makes hover animation for all inline tasks except task-adder object */
+.myDay-tasks .p-chip:hover , .task-view-container .p-chip:hover{
     background: #dbd8d8 !important;
     cursor: pointer !important;
     transition-property: 'background';
     transition-duration: 0.3s;
 }
 
-.myDay-tasks .p-chip .p-inputtext{
+.p-chip .p-inputtext{
     border:none !important;
     background: none;
 }
@@ -174,9 +175,8 @@ border-width: 3px;
 }
 
 .p-panel-content{
+    width:100% !important;
     background: rgba(0,0,0,0.2) !important;
-    overflow-y: scroll;
-    height: 300px;
 }
 
 .myDay-tasks {

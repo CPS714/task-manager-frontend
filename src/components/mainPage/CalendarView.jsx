@@ -1,5 +1,6 @@
 /* eslint-disable */
 import '../../Stylings/mainPage.css'
+import 'primeicons/primeicons.css'
 import { FaRegLightbulb } from 'react-icons/fa'
 import format from "date-fns/format";
 import getDay from "date-fns/getDay";
