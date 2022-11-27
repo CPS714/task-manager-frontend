@@ -9,8 +9,11 @@ import CustomPopup from '../../../Reusable/CustomPopup'
 import { Chip } from 'primereact/chip';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button'
+import { Panel } from 'primereact/panel';
 import { User } from '@auth0/auth0-react'
 import { useAuth0 } from '@auth0/auth0-react'
+import { Divider } from 'primereact/divider';
+
 
 import { Dialog } from 'primereact/dialog';
 
@@ -80,12 +83,18 @@ function TaskView (props) {
       <h5 className='task-subtitle'>Your Tasks</h5>
 
       <div className='myDay-tasks'>
-        <>
+      
+
+      <>
         {tasks?.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks'> 
         <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} opening={opening} /> </div> : null)}
         </>
-        <h5>Completed Tasks</h5>
-        {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks opening={opening} key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+
+        <div className="tasks-panel" style={{marginTop: '100px',padding:'0px 0em',width:'70vw'}}>
+          <Panel header="Completed Tasks" toggleable collapsed={true} style={{background:'rgba(255,255,255,0.1)'}}>
+            {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks opening={opening} key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+          </Panel>
+        </div>
       </div>
       {/* {openPop ? <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>: ""} */}
 
