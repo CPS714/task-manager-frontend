@@ -17,7 +17,6 @@ function SideBar (props) {
     { name: 'All', code: 'all' , icon: 'pi-globe'},
     { name: 'Completed', code: 'completed', icon: 'pi-check-circle' },
     { name: 'Today', code: 'today' , icon: 'pi-sun'},
-    { name: 'Categories' , code: 'categories', icon: 'pi-tags' },
     { name: 'Calendar', code: 'calendarView', icon: 'pi-calendar' }
   ];
 
