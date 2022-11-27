@@ -8,10 +8,13 @@ import { InputText } from 'primereact/inputtext'
 import { InputTextarea } from 'primereact/inputtextarea';
 import { ToggleButton } from 'primereact/togglebutton';
 import { Button } from 'primereact/button'
+import { Chips } from 'primereact/chips';
 import 'primereact/resources/themes/tailwind-light/theme.css'    
 
 function CustomPopup(props) {
     const [displayBasic, setDisplayBasic] = useState(false);
+    const [categories, setCategories] = useState(["University","COE768"]);
+    
     const [edit, setEdit] = useState(true)
     const [id, setId] = useState(props?.data?.id)
     const [task, setTask] = useState(props?.data?.name)
@@ -75,7 +78,7 @@ function CustomPopup(props) {
                 <i className="pi pi-sort-amount-up"></i>
             </span>
             <Dropdown style={{ left: '0%', marginRight: '2rem' }} >
-                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{borderColor: 'transparent' }}>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{borderColor: 'transparent' }} disabled={edit}>
                     {priority}
                 </Dropdown.Toggle>
 
@@ -100,6 +103,11 @@ function CustomPopup(props) {
             <Calendar id="icon" value={date ? new Date(date) : null} onChange={(e) => setDate(e.value)} disabled={edit} showIcon />
         </div>
 
+        <label>Categories</label>
+        <div className="p-inputgroup">
+            <Chips value={categories} onChange={(e) => setCategories(e.value)} disabled={edit}/>
+        </div>
+
         <label> Description </label>
         <div className="description">
             <div >
@@ -107,7 +115,7 @@ function CustomPopup(props) {
                 type='text'
                 value={desc}
                 name='descreption'
-                cols={40}
+                cols={60}
                 onChange={(event) => setDec(event.target.value)}
                 disabled={edit}/>
             </div>

@@ -119,6 +119,30 @@ border-width: 3px;
     background: #dbd8d8 !important;
     cursor: pointer !important;
     transition-property: 'background';
-    transition-duration: 0.5s;
-    
+    transition-duration: 0.3s;
+}
+
+.myDay-tasks .p-chip .p-inputtext{
+    border:none !important;
+    background: none;
+}
+
+/* hide if chips are unfilled */
+.inline-task-container .p-chips.p-component.p-inputwrapper.p-inputwrapper {
+    display: none !important;
+}
+
+/* sets display to visible if there are chips */
+.inline-task-container .p-chips.p-component.p-inputwrapper.p-inputwrapper-filled {
+    display:flex !important;
+    height: 3em !important;
+    overflow: hidden !important;
+}
+
+
+.p-checkbox .p-checkbox-box {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 100% !important;
+    justify-self: center;
 }
