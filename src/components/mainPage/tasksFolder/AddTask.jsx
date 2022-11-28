@@ -7,6 +7,7 @@ import 'primeicons/primeicons.css'
 import '../../../Stylings/mainPage.css'
 import { InputText } from 'primereact/inputtext'
 import propTypes from 'prop-types'
+import emailjs from 'emailjs-com'
 
 function AddTask ({ onAdd }) {
   const [text, setText] = useState('')
@@ -19,9 +20,16 @@ function AddTask ({ onAdd }) {
       return
     }
     onAdd(tempTask)
-
+    // send email
+    emailjs.send('service_1wxbzng', 'template_lw3veqa', tempTask, 'BWIC0zbpY90OqAlQk')
+    .then((response) => {
+      console.log('Email Notification Sent!', response.status, response.text);
+    })
+    .catch((err) => {
+      console.log('FAILED...', err);
+    });
     setText('')
-
+    
     setTempTask('');
   }
 

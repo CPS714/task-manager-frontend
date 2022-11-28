@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState } from 'react'
 import '../../../Stylings/tasks.css'
+import emailjs from 'emailjs-com'
 import propTypes from 'prop-types'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import 'primeicons/primeicons.css';
@@ -18,6 +19,13 @@ function Tasks ({ task, onDelete, onCheck, opening }) {
     setChecked(!task?.is_completed)
     if (task?.is_completed) {
       onCheck(task.id, false)
+    emailjs.send('service_1wxbzng', 'template_9pix7kh', tempTask, 'BWIC0zbpY90OqAlQk')
+    .then((response) => {
+      console.log('Email Notification Sent!', response.status, response.text);
+    })
+    .catch((err) => {
+      console.log('FAILED...', err);
+    });
     } else {
       onCheck(task.id, true)
     }
