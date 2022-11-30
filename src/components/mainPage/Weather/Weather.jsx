@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import '../../../Stylings/mainPage.css'
+import loading from '../../../Images/loading.gif'
 
 function Weather(props) {
     const {wether, setWether} = props;
@@ -19,16 +20,18 @@ function Weather(props) {
         //only allowed to make 60 calls a min
         //Grabs temperature based on host current location
         if(latitude !== '' && longitude !== "" && location === '' && wether < 1){
-           
+            setLoading(true)
         axios.get(urlLongLat)
         .then((response) => {
           //On sucsessfull call
+          setLoading(false)
           setData(response.data)
           setWether(wether++)
           
 
         })
         .catch(function (error) {
+            setLoading(false)
             setWether(wether++)
         })
     }
@@ -56,7 +59,9 @@ function Weather(props) {
 
   return (
     <div className='weather-container'>
-        {data?.name !== undefined ? 
+        {!loading ?
+        
+        data?.name !== undefined ? 
         <>
       <p style={{fontSize: "22px"}}><b style={{fontSize: "24px", fontWeight: "700"}}>Location: </b> {data?.name}</p>
       
@@ -65,7 +70,11 @@ function Weather(props) {
       <p style={{fontSize: "22px"}}><b style={{fontSize: "24px", fontWeight: "700"}}>Descreption: </b>{data?.weather[0]?.main}</p>
       </>
       :
-      null}
+      null
+        :
+        <img style={{width: '8%', height: '8%'}} src={require('../../../Images/loading.gif')} alt="loading-gif" />
+    }
+
     </div>
   )
 }

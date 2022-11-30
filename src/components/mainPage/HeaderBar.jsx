@@ -27,8 +27,9 @@ function HeaderBar ({onSearch}) {
            icon:'pi pi-fw pi-user',
            items:[
               {
-                 label:'Account',
+                 label:'Google Meets',
                  icon:'pi pi-fw pi-user',
+                 command: () => {window.location.href="https://meet.google.com/"},
               },
               {
                 label:'Logout',
