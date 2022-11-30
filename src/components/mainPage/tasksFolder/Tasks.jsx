@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../../Stylings/tasks.css'
 import emailjs from 'emailjs-com'
 import propTypes from 'prop-types'
@@ -13,8 +13,15 @@ import { Checkbox } from 'primereact/checkbox';
 
 function Tasks ({ task, onDelete, onCheck, opening }) {
   const [checked, setChecked] = useState(false)
-  const [categories, setCategories] = useState(["University","COE768"]);
+  const [categories, setCategories] = useState([]);
 
+  useEffect(() => {
+    setCategories([])
+    if(categories?.length !== task?.categories?.length){
+      task?.categories?.map((i) => setCategories(oldarr => [...oldarr, `${i} `]) && console.log(i))
+        
+    }
+},[] )
   function handleCheckbox () {
     console.log(checked)
     setChecked(!task?.is_completed)
