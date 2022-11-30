@@ -4,10 +4,17 @@ import { useEffect, useState } from 'react'
 import './CustomPopup.css'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { Calendar } from 'primereact/calendar'
-import { addLocale } from 'primereact/api';
+import { InputText } from 'primereact/inputtext'
+import { InputTextarea } from 'primereact/inputtextarea';
+import { ToggleButton } from 'primereact/togglebutton';
+import { Button } from 'primereact/button'
+import { Chips } from 'primereact/chips';
 import 'primereact/resources/themes/tailwind-light/theme.css'    
 
 function CustomPopup(props) {
+    const [displayBasic, setDisplayBasic] = useState(false);
+    const [categories, setCategories] = useState(["University","COE768"]);
+    
     const [edit, setEdit] = useState(true)
     const [id, setId] = useState(props?.data?.id)
     const [task, setTask] = useState(props?.data?.name)
@@ -40,7 +47,8 @@ function CustomPopup(props) {
             name: task,
             description: desc,
             priority: priority,
-            schedule_date: date
+            schedule_date: date,
+            categories: categories
 
           })
       };
@@ -53,58 +61,70 @@ function CustomPopup(props) {
       }
 
   return (
-    <div className='popup-box'>
-        <div className="header-bar" >
-            <button className="btn-close" onClick={props.closeTab} style={{marginLeft: '0.5rem', paddingTop: '0.5rem'}}> </button>
-            <button className='edit' onClick={() => setEdit(!edit)}> {edit? "Edit" : "Close" }  </button>
-        </div>
-        <div className='box'>
-            <input type='text'
-            value={task}
-            name='taskName'
-            className='headerName'
-            onChange={(event) => setTask(event.target.value)}
-            disabled={edit}/>
-        </div>
-        <div className='info'>
-            <div className='priority'>
-            <h1 style={{marginLeft: "1rem", fontSize: "30px"}}><b> Priority: </b></h1>
+    <div id="task-editor-container" >
+     
+            <InputText 
+                id="title"
+                value={task} 
+                type="text" 
+                className="p-inputtext-lg block" 
+                placeholder="Task Name" 
+                onChange={(event) => setTask(event.target.value)}
+                disabled={edit}
+            />
+
+        <label> Priority: </label>
+        <div class="p-inputgroup">
+            <span className="p-inputgroup-addon">
+                <i className="pi pi-sort-amount-up"></i>
+            </span>
             <Dropdown style={{ left: '0%', marginRight: '2rem' }} >
-                    <Dropdown.Toggle variant="success" id="dropdown-basic" className='logout-toggle'style={{borderColor: 'transparent' }}>
-                        {priority}
-                    </Dropdown.Toggle>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{borderColor: 'transparent' }} disabled={edit}>
+                    {priority}
+                </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={ () => setPriority(1)}> 1 </Dropdown.Item>
-                        <Dropdown.Item onClick={ () => setPriority(2)}> 2 </Dropdown.Item>
-                        <Dropdown.Item onClick={ () => setPriority(3)}> 3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-            </div>
-            <div className='status' style={{marginTop: "1rem"}}>
-                <h1 style={{marginLeft: "1rem", fontSize: "30px"}}><b> Status: </b></h1>
-                <p style={{marginRight: '2rem', fontSize: "24px"}}>{props?.data?.is_completed ? "Completed" : "Incomplete"} </p>
-            </div>
-
-            <div div className='date' style={{marginTop: "1rem"}}>
-                <h1 style={{marginLeft: "1rem", fontSize: "30px"}}><b> Date: </b></h1>
-                <Calendar style={{ left: '0%', marginRight: '2rem' }} id="icon" value={date ? new Date(date) : null} onChange={(e) => setDate(e.value)}  appendTo={'self'} showIcon />
-            </div>
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={ () => setPriority(1)}> 1 </Dropdown.Item>
+                    <Dropdown.Item onClick={ () => setPriority(2)}> 2 </Dropdown.Item>
+                    <Dropdown.Item onClick={ () => setPriority(3)}> 3 </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </div>
-        <div className='descreption-container'>
-            <h1 className='descriptionClass'  > Description </h1>
-            <textarea 
-            style = {{marginLeft: '1rem'}}
-            type='text'
-            value={desc}
-            name='descreption'
-            className='descreption'
-            onChange={(event) => setDec(event.target.value)}
-            disabled={edit}/>
+
+        <label> Status: </label>
+        <div class="p-inputgroup">
+            <span className="p-inputgroup-addon">
+                <i className="pi pi-check-circle"></i>
+            </span>
+            <ToggleButton checked={props?.data?.is_completed} onLabel="Completed" offLabel="Incomplete" onIcon="pi pi-check" offIcon="pi pi-times" aria-label="Confirmation" disabled={true}/>
+        </div>
+
+        <label>Date:</label>
+        <div class="p-inputgroup">
+            <Calendar id="icon" value={date ? new Date(date) : null} onChange={(e) => setDate(e.value)} disabled={edit} showIcon />
+        </div>
+
+        <label>Categories</label>
+        <div className="p-inputgroup">
+            <Chips value={categories} onChange={(e) => setCategories(e.value)} disabled={edit}/>
+        </div>
+
+        <label> Description </label>
+        <div className="description">
+            <div >
+                <InputTextarea 
+                type='text'
+                value={desc}
+                name='descreption'
+                cols={60}
+                onChange={(event) => setDec(event.target.value)}
+                disabled={edit}/>
+            </div>
         </div>
         
-        <div className="footer" >
-            <button className='edit' disabled={onSave} style={onSave ? {color: 'grey'} : {color: 'blue'}} onClick={updateTask}> Save  </button>
+        <div>
+            <Button className='p-button-outlined p-button-secondary' disabled={onSave} style={onSave ? {color: 'grey'} : {color: 'blue'}} onClick={updateTask}> Save  </Button>
+            <Button className='p-button-outlined p-button-danger' onClick={() => setEdit(!edit)}> {edit? "Edit" : "Close" }  </Button>
         </div>
     </div>
   )

@@ -8,11 +8,12 @@ import 'primeicons/primeicons.css';
 import { Chip } from 'primereact/chip'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
+import { Chips } from 'primereact/chips';
 import { Checkbox } from 'primereact/checkbox';
 
 function Tasks ({ task, onDelete, onCheck, opening }) {
   const [checked, setChecked] = useState(false)
-  const [tempTask, setTempTask] = useState('');
+  const [categories, setCategories] = useState(["University","COE768"]);
 
   function handleCheckbox () {
     console.log(checked)
@@ -29,6 +30,8 @@ function Tasks ({ task, onDelete, onCheck, opening }) {
     } else {
       onCheck(task.id, true)
     }
+
+    
   }
 
   const taskScheduleDate = new Date(Date.parse(task.schedule_date))
@@ -36,21 +39,32 @@ function Tasks ({ task, onDelete, onCheck, opening }) {
   const taskTemplate = (option) => {
     return (
 
-        <div className="inline-task-add-container" >
-        <Checkbox onChange={handleCheckbox} checked={task?.is_completed}></Checkbox>
-            <span className="task-name-container" onClick={() => opening(task)}>
-              {task.name}
-              {!task?.is_completed && <p className='pi pi-calendar' style={{color:"grey", fontSize:"10px"}}> {task.schedule_date?.slice(0,10)} </p>}
-              {task?.is_completed && <p className='pi pi-calendar' style={{color:"grey", fontSize:"10px", textDecoration: "line-through" }}> {task.schedule_date?.slice(0,10)} </p>}
-            </span>
-            <i className='pi pi-trash' onClick={() => onDelete(task.id)} ></i>
+        <div className="inline-task-container" >
+
+
+          <div style={{height:'100%'}} onClick={(event) =>  event.stopPropagation() } >
+            <Checkbox style={{width:'50px',height:'100%'}} onChange={(event)=>  handleCheckbox() } checked={task?.is_completed}></Checkbox>
+          </div>
+
+          <span className="task-name-container">
+            {task.name}
+            {!task?.is_completed && <p className='pi pi-calendar' style={{color:"grey", fontSize:"10px"}}> {task.schedule_date?.slice(0,10)} </p>}
+            {task?.is_completed && <p className='pi pi-calendar' style={{color:"grey", fontSize:"10px", textDecoration: "line-through" }}> {task.schedule_date?.slice(0,10)} </p>}
+          </span>
+
+          <Chips style={{border:'none'}} value={categories} onChange={(e) => setCategories(e.value)} disabled={true}/>
+
+          <div style={{width:"100px"}}>
+            <Button className='p-button-rounded p-button-outlined' style={{zIndex:"9000"}} icon='pi pi-trash' onClick={(event) =>    {onDelete(task.id); event.stopPropagation() }} >          
+            </Button>
+          </div>
         </div>
     );
 }
 
 
   return (
-    <Chip style={{padding:'1em', width: '80%', justifyContent: 'space-evenly', background: 'white', margin: '1em 0'}} template={taskTemplate} />
+    <Chip style={{padding:'1em', width: '80%', justifyContent: 'space-evenly', background: 'white', margin: '1em 0',cursor:'pointer'}} onClick={() => opening(task)} template={taskTemplate} />
     // <div className='myDay-tasks-container'>
 
       

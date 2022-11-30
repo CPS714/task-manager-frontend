@@ -1,5 +1,6 @@
 /* eslint-disable */
 import '../../Stylings/mainPage.css'
+import 'primeicons/primeicons.css'
 import { FaRegLightbulb } from 'react-icons/fa'
 import format from "date-fns/format";
 import getDay from "date-fns/getDay";
@@ -11,6 +12,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Card } from 'primereact/card';
 
 
 const locales = {
@@ -54,14 +56,16 @@ function CalendarView(props){
             })
 
     return(
-        <div>
-        <div className='myDay-header-Container'>
-          <FaRegLightbulb className='myDay-BulbIcon'></FaRegLightbulb>
-          <span className='myDay-Header'> Calendar View </span>
-          <span className='pi pi-ellipsis-h'></span>
+      <div className='task-view-background' style={{backgroundImage: 'linear-gradient(to right top, #00e4ff, #00cdfc, #00b6f5, #2b9ee8, #4f85d5)',width:'auto', alignItems:'center'}}>
+        
+        
+        <div className="task-view-container">
+          <i className='pi pi-calendar' style={{'fontSize': '2em'}}></i>
+          <h2 className = 'task-type-header'>Calendar View</h2>
         </div>
+
         <Calendar localizer={localizer} events={events} 
-        startAccessor="start" endAccessor="end" titleAccessor="name" allDayAccessor="is_completed" style={{height: "600px", margin:"50px", width:"1000px"}} />
+        startAccessor="start" endAccessor="end" titleAccessor="name" allDayAccessor="is_completed" style={{height: "600px", margin:"50px", width:"90%",color:'black' ,background: 'white', border:'solid white',padding:'20px',borderRadius:'2%', boxShadow: '-1px 16px 39px -15px rgba(0,0,0,0.67)'}} />
       </div>    
       )
 }

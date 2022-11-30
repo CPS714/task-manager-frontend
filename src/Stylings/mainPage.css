@@ -101,14 +101,87 @@ border-width: 3px;
 
 }
 
-.inline-task-add-container{
+.inline-task-add-container, .inline-task-container{
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    align-items: inherit;
     width: 100%;
+    height: 100%;
     justify-content: space-between;
+    background:none;
 }
 
 .task-container-text-input{
     width: max-content;
+}
+
+.myDay-tasks{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+ /* Makes hover animation for all inline tasks except task-adder object */
+.myDay-tasks .p-chip:hover , .task-view-container .p-chip:hover{
+    background: #dbd8d8 !important;
+    cursor: pointer !important;
+    transition-property: 'background';
+    transition-duration: 0.3s;
+}
+
+.p-chip .p-inputtext{
+    border:none !important;
+    background: none;
+}
+
+/* hide if chips are unfilled */
+.inline-task-container .p-chips.p-component.p-inputwrapper.p-inputwrapper {
+    display: none !important;
+}
+
+/* sets display to visible if there are chips */
+.inline-task-container .p-chips.p-component.p-inputwrapper.p-inputwrapper-filled {
+    display:flex !important;
+    height: 3em !important;
+    overflow: hidden !important;
+}
+
+
+.p-checkbox .p-checkbox-box {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 100% !important;
+    justify-self: center;
+}
+
+.p-panel-header {
+    background: #809cde !important;
+    color: white !important;
+    border-color:rgba(0,0,0,0.2) !important;
+}
+
+.p-panel{
+    box-shadow: -1px 16px 39px -15px rgba(0,0,0,0.67);
+}
+
+.p-panel-toggler{
+    color:aliceblue !important;
+}
+
+.p-panel .p-panel-header .p-panel-header-icon:enabled:hover {
+    color: #18181B;
+    border-color: transparent;
+    background: #4266ac !important;
+}
+
+.p-panel-content{
+    width:100% !important;
+    background: rgba(0,0,0,0.2) !important;
+}
+
+.myDay-tasks {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
 }

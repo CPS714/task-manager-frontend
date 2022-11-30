@@ -6,6 +6,7 @@ import SideBar from './SideBar'
 import CompletedView from './CompletedTasks/CompletedView'
 import TodayView from './TodayTasks/TodayView'
 import SearchedTaksView from './SearchedTasks/SearchedTasksView'
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
 import CalendarView from './CalendarView'
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'

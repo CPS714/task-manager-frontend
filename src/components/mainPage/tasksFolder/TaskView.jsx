@@ -9,10 +9,14 @@ import CustomPopup from '../../../Reusable/CustomPopup'
 import { Chip } from 'primereact/chip';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button'
+import { Panel } from 'primereact/panel';
 import { User } from '@auth0/auth0-react'
 import { useAuth0 } from '@auth0/auth0-react'
+import { ScrollPanel } from 'primereact/scrollpanel';
+import { Dialog } from 'primereact/dialog';
 
 function TaskView (props) {
+
   const {tasks, setTasks, getCall, deleteTask, completeTask} = props;
   const today = new Date()
   let day = today.getDate();
@@ -58,17 +62,11 @@ function TaskView (props) {
 
   const taskTemplate = (option) => {
     return (
-        <div className="inline-task-add-container" >
-        <Button icon="pi pi-check" className="p-button-rounded p-button-outlined p-button-success" aria-label="User" />
-
-            <span>
-              Text Display
-            </span>
-
-            <i className='pi pi-trash'></i>
+        <div className="inline-task-container" >
+          <Button icon="pi pi-check" className="p-button-rounded p-button-outlined p-button-success" aria-label="User" />
         </div>
     );
-}
+  }
 
 
   return (
@@ -83,14 +81,24 @@ function TaskView (props) {
       <h5 className='task-subtitle'>Your Tasks</h5>
 
       <div className='myDay-tasks'>
-        <>
-        {tasks?.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks'> 
-        <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} opening={opening} /> </div> : null)}
-        </>
-        <h5>Completed Tasks</h5>
-        {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks opening={opening} key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+      
+          {tasks?.map((i) => !i.is_completed && i?.is_completed !== null ? <div className='myDay-tasks'> 
+          <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} opening={opening} /> </div> : null)}
+
+        <div className="tasks-panel" style={{marginTop: '100px',padding:'0px 0em',width:'80%'}}>
+          <Panel header="Completed Tasks" toggleable collapsed={true} style={{background:'rgba(255,255,255,0.1)'}}>
+            <ScrollPanel style={{width: '100%', height: '300px'}}>
+              {tasks?.map((i) => i.is_completed && i.is_completed !== null ? <Tasks opening={opening} key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} /> : null)}
+            </ScrollPanel>
+          
+          </Panel>
+        </div>
       </div>
-      {openPop ? <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>: ""}
+      {/* {openPop ? <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>: ""} */}
+
+      <Dialog header="Task Editor" visible={openPop} style={{ width: '50vw' }} onHide={() => setOpenPop(false)}>
+        <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>
+      </Dialog>
     </div>
   )
 }

@@ -33,7 +33,7 @@ function HeaderBar ({onSearch}) {
               {
                 label:'Logout',
                 icon:'pi pi-fw pi-power-off',
-                url: ()=> logout({ returnTo: window.location.origin }),
+                command: ()=> logout({ returnTo: window.location.origin }),
              }
            ]
         },
