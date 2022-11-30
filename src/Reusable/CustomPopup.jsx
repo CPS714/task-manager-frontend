@@ -47,7 +47,8 @@ function CustomPopup(props) {
             name: task,
             description: desc,
             priority: priority,
-            schedule_date: date
+            schedule_date: date,
+            categories: categories
 
           })
       };
