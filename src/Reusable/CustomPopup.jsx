@@ -13,7 +13,7 @@ import 'primereact/resources/themes/tailwind-light/theme.css'
 
 function CustomPopup(props) {
     const [displayBasic, setDisplayBasic] = useState(false);
-    const [categories, setCategories] = useState(["University","COE768"]);
+    const [categories, setCategories] = useState([]);
     
     const [edit, setEdit] = useState(true)
     const [id, setId] = useState(props?.data?.id)
@@ -32,6 +32,13 @@ function CustomPopup(props) {
     let nextMonth = (month === 11) ? 0 : month + 1;
     let nextYear = (nextMonth === 0) ? year + 1 : year;
 
+    useEffect(() => {
+        setCategories([])
+        if(categories?.length !== props?.data?.categories?.length){
+            props?.data?.categories?.map((i) => setCategories(oldarr => [...oldarr, i]) && console.log(i))
+            
+        }
+    },[] )
 
     useEffect(() => {
         if(task !== props?.data?.name || desc !== props?.data?.desc || priority !== props?.data?.priority){
