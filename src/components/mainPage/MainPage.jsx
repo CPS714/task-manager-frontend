@@ -17,6 +17,7 @@ function MainPage (props) {
   const [isLoading, setIsLoading] = useState(true)
   const [tasks, setTasks] = useState([]);
   const { user, logout } = useAuth0()
+  const [wether, setWether] = useState([]); // prevents multiple renders of the weather class
   const [searchedResult, setSearchedResult] = useState('')
 
   const onSearchResult = (result) => {
@@ -94,7 +95,7 @@ function MainPage (props) {
     .catch(err => setTasks("err"))
     setIsLoading(false)
   }, [])
-
+  
 
   return (
     <div className='mainpagecontainer'>
@@ -107,7 +108,7 @@ function MainPage (props) {
         {(options?.all & !isLoading)? <TaskView tasks={tasks} setTasks={setTasks} getCall={getCall} deleteTask={deleteTask} completeTask={completeTask} /> : null}
         {(options?.completed & !isLoading) ? <CompletedView tasks={tasks} completeTask={completeTask} deleteTask={deleteTask} getCall={getCall}/> : null}
         {(options?.today & !isLoading) ? <TodayView tasks={tasks} completeTask={completeTask} deleteTask={deleteTask} getCall={getCall}/> : null}
-        {(options?.calendarView & !isLoading) ? <CalendarView tasks={tasks} setTasks={setTasks}/> : null}
+        {(options?.calendarView & !isLoading) ? <CalendarView tasks={tasks} setTasks={setTasks} wether={wether} setWether={setWether}/> : null}
         {(!options?.all & !options?.completed & !options?.today & !options?.calendarView & !isLoading) ? <SearchedTaksView searchedResult={searchedResult} tasks={tasks} completeTask={completeTask} deleteTask={deleteTask} getCall={getCall}/>: null}
         </div>
         
