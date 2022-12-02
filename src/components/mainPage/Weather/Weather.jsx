@@ -67,7 +67,7 @@ function Weather(props) {
       
       <p style={{fontSize: "22px"}}> <b style={{fontSize: "24px", fontWeight: "700"}}>Temp: </b> {Math.round(data?.main?.temp - 273.15) } °C</p>
 
-      <p style={{fontSize: "22px"}}><b style={{fontSize: "24px", fontWeight: "700"}}>Descreption: </b>{data?.weather[0]?.main}</p>
+      <p style={{fontSize: "22px"}}><b style={{fontSize: "24px", fontWeight: "700"}}>Description: </b>{data?.weather[0]?.main}</p>
       </>
       :
       null

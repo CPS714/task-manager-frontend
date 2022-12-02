@@ -53,7 +53,7 @@ function CalendarView(props){
 // jason's version end: new Date(task.schedule_date)
 
   const events = tasks.map(({created_on, schedule_date, ...item}) => {
-    return ({start: new Date(Date.parse(created_on)),
+    return ({start: new Date(Date.parse(schedule_date)),
              end: new Date(Date.parse(schedule_date)),
              ...item})
             })

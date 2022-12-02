@@ -48,7 +48,7 @@ function TaskView (props) {
     if(data?.code.toString() === '200'){
       getCall()
     }
-    
+    getCall()
   }
 
   const closing = () => {

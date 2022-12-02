@@ -5,6 +5,7 @@ import { FaRegLightbulb } from 'react-icons/fa'
 import Tasks from '../tasksFolder/Tasks'
 import 'primeicons/primeicons.css'
 import CustomPopup from '../../../Reusable/CustomPopup'
+import { Dialog } from 'primereact/dialog';
 
 
 function SearchedTasksView (props) {
@@ -36,7 +37,9 @@ function SearchedTasksView (props) {
         <h2 className = 'task-type-header'>The Searched Results are...</h2>
         {tasks.map((i) => searchedTasks(i.name) ? <Tasks key= {i.id} task={ i } onDelete={deleteTask} onCheck={completeTask} opening={opening}/> : null)}
       </div>
-      {openPop ? <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>: ""}
+      <Dialog header="Task Editor" visible={openPop} style={{ width: '50vw' }} onHide={() => setOpenPop(false)}>
+        {openPop ? <CustomPopup closeTab={closing} data={taskdData} getCall={getCall}/>: ""}
+      </Dialog>
     </div>
   )
 }
